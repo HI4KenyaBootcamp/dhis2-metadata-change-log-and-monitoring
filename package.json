@@ -9,7 +9,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build && npm run manifest",
     "postbuild": "cp icon.png ./build/",
-    "manifest":"d2-manifest package.json build/manifest.webapp",
+    "manifest": "d2-manifest package.json build/manifest.webapp",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -21,10 +21,10 @@
     "react-dom": "^16.5.0",
     "react-scripts": "1.1.5"
   },
-  "manifest.webapp":{
+  "manifest.webapp": {
     "name": "Metadata Audit",
-    "icons":{
-      "48":"icon.png"
+    "icons": {
+      "48": "icon.png"
     },
     "developer": {
       "url": "",

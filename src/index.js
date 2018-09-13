@@ -23,10 +23,20 @@ import { init, getInstance } from 'd2/lib/d2';
 // initialize d2 library - local
 init({ baseUrl: 'https://test.hiskenya.org/kenya/api' });
 
-// print the currentUser name in the console
+// get an instance of d2
 getInstance().then(d2 => {
-  console.log(d2.currentUser.name);
+  const api = d2.Api.getApi(); // returns the api object
+
+  api.get('dataElements.json') // do a get request for /api/resources
+  .then(resources => {
+    let res = resources;
+    res.dataElements.forEach(consPr);
+  });
 });
+
+function consPr(item, index) {
+  console.log(item.displayName);
+}
 
 class TodoApp extends React.Component {
   constructor(props) {
