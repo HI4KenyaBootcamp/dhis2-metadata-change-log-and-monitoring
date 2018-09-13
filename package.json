@@ -1,16 +1,39 @@
 {
-  "name": "dhis2-metadata-change-log-and-monitoring",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-scripts": "1.1.5"
-  },
+  "name": "metadata-change-log-and-monitoring",
+  "version": "0.0.1",
+  "description": "DHIS2 Metadata Change Log and Monitoring app",
+  "main": "index.js",
+  "homepage": "https://test.hiskenya.org/kenya/api/apps/Metadata-Audit",
+  "license": "BSD-3-Clause",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && npm run manifest",
+    "postbuild": "cp icon.png ./build/",
+    "manifest":"d2-manifest package.json build/manifest.webapp",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@material-ui/core": "^3.0.3",
+    "@material-ui/icons": "^3.0.1",
+    "d2": "^30.0.2",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "react-scripts": "1.1.5"
+  },
+  "manifest.webapp":{
+    "name": "Metadata Audit",
+    "icons":{
+      "48":"icon.png"
+    },
+    "developer": {
+      "url": "",
+      "name": "University of Nairobi Health IT"
+    },
+    "activities": {
+      "dhis": {
+        "href": "*"
+      }
+    }
   }
 }
