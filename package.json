@@ -4,7 +4,7 @@
   "description": "DHIS2 Metadata Change Log and Monitoring app",
   "main": "index.js",
   "homepage": "https://test.hiskenya.org/kenya/api/apps/Metadata-Audit",
-  "license": "BSD-3-Clause",
+  "license": "GPLv3",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && npm run manifest",
