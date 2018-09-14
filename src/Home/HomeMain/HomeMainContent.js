@@ -61,7 +61,7 @@ class HomeMainContent extends React.Component {
           <TableRow key={dataElement.id}>
             <TableCell component="th" scope="row">{dataElement.name}</TableCell>
             <TableCell>{dataElement.lastUpdated}</TableCell>
-        </TableRow>
+          </TableRow>
         );
         // set this.state.dataElements
         this.setState({
