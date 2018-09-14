@@ -16,17 +16,20 @@
  */
 
 import React from 'react';
+import HomePopular from './HomePopular';
+import HomeRecent from './HomeRecent';
+import HomeMain from './HomeMain/HomeMain';
 
-class TodoList extends React.Component {
+class Home extends React.Component {
   render() {
-    return(
-      <ul>
-        {this.props.items.map(item => (
-          <li key={item.id}>{item.text}</li>
-        ))}
-      </ul>
+    return (
+      <React.Fragment>
+        <HomePopular />
+        <HomeRecent />
+        <HomeMain />
+      </React.Fragment>
     );
   }
 }
 
-export default TodoList;
+export default Home;
