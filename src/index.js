@@ -27,10 +27,10 @@ init({ baseUrl: 'https://test.hiskenya.org/kenya/api' });
 getInstance().then(d2 => {
   const api = d2.Api.getApi(); // returns the api object
 
-  api.get('dataElements.json') // do a get request for /api/resources
+  api.get('resources.json') // do a get request for /api/resources
   .then(resources => {
     let res = resources;
-    res.dataElements.forEach(consPr);
+    res.resources.forEach(consPr);
   });
 });
 
