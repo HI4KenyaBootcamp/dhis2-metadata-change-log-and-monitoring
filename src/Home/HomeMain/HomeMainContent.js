@@ -40,7 +40,7 @@ class HomeMainContent extends React.Component {
   }
 
   /**
-   * func: componentWillMoun()
+   * func: componentWillMount()
    * 
    * in-built ReactJS function, executed before rendering
    */
@@ -71,6 +71,11 @@ class HomeMainContent extends React.Component {
     });
   }
 
+  /**
+   * func: render()
+   * 
+   * renders the component table
+   */
   render() {
     return (
       <React.Fragment>
