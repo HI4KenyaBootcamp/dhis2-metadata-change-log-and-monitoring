@@ -54,7 +54,7 @@ class HomeMainContent extends React.Component {
       const api = d2.Api.getApi();
     
       // send get request for /api/dataElements
-      api.get('dataElements.json', {'fields': 'id,name,valueType,domainType,lastUpdated', 'pageSize': '20'})
+      api.get('dataElements.json', {'fields': 'id,name', 'pageSize': '20'})
       .then(resources => {
         // assign dataElemets to variable
         let dataElements = resources.dataElements.map((dataElement) =>
