@@ -24,7 +24,6 @@ class HomeMainMenu extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <p>I am HomeMainMenu</p>
         {/* more render code goes here */} 
       </React.Fragment>
     );

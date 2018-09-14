@@ -18,31 +18,75 @@
 import React from 'react';
 import { init, getInstance } from 'd2/lib/d2';
 
-// initialize d2 library - local
-init({ baseUrl: 'https://test.hiskenya.org/kenya/api' });
-
-// get an instance of d2
-getInstance().then(d2 => {
-  // returns the api object
-  const api = d2.Api.getApi();
-
-  // do a get request for /api/resources
-  api.get('dataElements.json', {'fields': ':all', 'pageSize': '5'})
-  .then(resources => {
-    // for each object
-    resources.dataElements.forEach(consolePrint);
-  });
-});
-
-function consolePrint(item, index) {
-  console.log(item.id + ' | ' + item.displayName + ' | ' + item.valueType);
-}
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 class HomeMainContent extends React.Component {
+  /**
+   * func: constructor() 
+   * 
+   * initialization function
+   * @param {*} props 
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataElements: []
+    };
+  }
+
+  /**
+   * func: componentWillMoun()
+   * 
+   * in-built ReactJS function, executed before rendering
+   */
+  componentWillMount() {
+    // initialize d2 library baseURL
+    init({ baseUrl: 'https://test.hiskenya.org/kenya/api' });
+
+    // get d2 library instance
+    getInstance().then(d2 => {
+      // return the api object
+      const api = d2.Api.getApi();
+    
+      // send get request for /api/dataElements
+      api.get('dataElements.json', {'fields': 'id,name,valueType,domainType,lastUpdated', 'pageSize': '20'})
+      .then(resources => {
+        // assign dataElemets to variable
+        let dataElements = resources.dataElements.map((dataElement) =>
+          <TableRow key={dataElement.id}>
+            <TableCell component="th" scope="row">{dataElement.name}</TableCell>
+            <TableCell>{dataElement.lastUpdated}</TableCell>
+        </TableRow>
+        );
+        // set this.state.dataElements
+        this.setState({
+          dataElements: dataElements
+        });
+      });
+    });
+  }
+
   render() {
     return (
       <React.Fragment>
-        <p>I am HomeMainContent</p>
+        <Paper>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Last Updated</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.state.dataElements}
+            </TableBody>
+          </Table>
+        </Paper>
       </React.Fragment>
     );
   }
