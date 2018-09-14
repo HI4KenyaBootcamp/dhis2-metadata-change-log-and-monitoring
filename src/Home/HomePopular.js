@@ -46,7 +46,6 @@ class HomePopular extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <p>I am HomePopular</p>
         {/* more render code goes here */} 
       </React.Fragment>
     );
