@@ -16,20 +16,19 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Home from './Home/Home';
 
-class MetadataAudit extends React.Component {
+/* some code goes here */
 
+class HomeRecent extends React.Component {
+  /* most code goes here */
   render() {
     return (
       <React.Fragment>
-        <CssBaseline />
-        <Home />
+        <p>I am HomeRecent</p>
+        {/* more render code goes here */} 
       </React.Fragment>
     );
   }
 }
 
-ReactDOM.render(<MetadataAudit />, document.getElementById('root'));
+export default HomeRecent;

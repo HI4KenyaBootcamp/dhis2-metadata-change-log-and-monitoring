@@ -16,20 +16,20 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Home from './Home/Home';
+import HomeMainMenu from './HomeMainMenu';
+import HomeMainSidebar from './HomeMainSidebar';
+import HomeMainContent from './HomeMainContent';
 
-class MetadataAudit extends React.Component {
-
+class HomeMain extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <CssBaseline />
-        <Home />
+        <HomeMainMenu />
+        <HomeMainSidebar />
+        <HomeMainContent />
       </React.Fragment>
     );
   }
 }
 
-ReactDOM.render(<MetadataAudit />, document.getElementById('root'));
+export default HomeMain;
