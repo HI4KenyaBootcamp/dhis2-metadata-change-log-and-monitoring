@@ -17,7 +17,7 @@
 
 import React from 'react';
 
-import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, withStyles } from '@material-ui/core/';
+import { AppBar, Tabs, Tab, Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, withStyles } from '@material-ui/core/';
 
 import { init, getInstance } from 'd2/lib/d2';
 
@@ -41,6 +41,20 @@ const styles = theme => ({
   },
 });
 
+/**
+ * func: TabContainer
+ * 
+ * container for the tabs
+ */
+function TabContainer(props) {
+  return (
+    <Typography component="div" style={{ padding: 8 * 3 }}>
+      {props.children}
+    </Typography>
+  );
+}
+
+
 class HomeMain extends React.Component {
   /**
    * func: constructor() 
@@ -51,7 +65,8 @@ class HomeMain extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataElements: []
+      dataElements: [],
+      value: 0,
     };
   }
 
@@ -89,32 +104,63 @@ class HomeMain extends React.Component {
   }
 
   /**
+   * func: handleChange()
+   * 
+   * changes tabs
+   */
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+
+  /**
    * func: render()
    * 
    * renders the table
    */
   render() {
     const { classes } = this.props;
+    const { value } = this.state;
 
     return (
       <React.Fragment>
         <Paper className={classes.root}>
-          <div className={classes.title}>
-            <Typography variant="title">Data Elements</Typography>
-          </div>
-          <div className={classes.tableWrapper}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Created At</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.state.dataElements}
-              </TableBody>
-            </Table>
-          </div>
+          <AppBar position="static">
+            <Tabs value={value} onChange={this.handleChange}>
+              <Tab label="Category" />
+              <Tab label="Data Element" />
+              <Tab label="Data Set" />
+              <Tab label="Indicator" />
+              <Tab label="Organization Unit" />
+              <Tab label="Program" />
+              <Tab label="Validation" />
+              <Tab label="Other" />
+            </Tabs>
+          </AppBar>
+          {value === 0 && <TabContainer> {/* category */} </TabContainer>}
+          {value === 1 && <TabContainer>
+              <div className={classes.title}>
+                <Typography variant="title">Data Elements</Typography>
+              </div>
+              <div className={classes.tableWrapper}>
+                <Table className={classes.table}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Created At</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {this.state.dataElements}
+                  </TableBody>
+                </Table>
+              </div>
+          </TabContainer>}
+          {value === 2 && <TabContainer> {/* data set */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* indicator */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* organization unit */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* program */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* validation */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* other */} </TabContainer>}
         </Paper>
       </React.Fragment>
     );
