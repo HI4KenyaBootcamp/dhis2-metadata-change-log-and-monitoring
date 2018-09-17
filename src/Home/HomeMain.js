@@ -17,16 +17,31 @@
 
 import React from 'react';
 
+import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, withStyles } from '@material-ui/core/';
+
 import { init, getInstance } from 'd2/lib/d2';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+const styles = theme => ({
+  /**
+   * const: styles = func: theme()
+   * 
+   * css for the component being rendered
+   */
+  root: {
+    margin: theme.spacing.unit,
+  },
+  tableWrapper: {
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 540,
+  },
+  title: {
+    padding: theme.spacing.unit*2,
+  },
+});
 
-class HomeMainContent extends React.Component {
+class HomeMain extends React.Component {
   /**
    * func: constructor() 
    * 
@@ -55,12 +70,12 @@ class HomeMainContent extends React.Component {
       const api = d2.Api.getApi();
     
       // send get request for /api/dataElements
-      api.get('metadataAudits.json', {'fields': 'uid,klass,createdAt', 'pageSize': '10', 'klass': 'org.hisp.dhis.dataelement.DataElement'})
+      api.get('metadataAudits.json', {'fields': 'uid,klass,createdAt,createdBy,type', 'pageSize': '10', 'klass': 'org.hisp.dhis.dataelement.DataElement'})
       .then(resources => {
         console.log(resources);
         // assign dataElemets to variable
         let dataElements = resources.metadataAudits.map((metadataAudit) =>
-          <TableRow key={metadataAudit.createdAt}>
+          <TableRow key={(metadataAudit.createdAt)}>
             <TableCell component="th" scope="row">{metadataAudit.klass}</TableCell>
             <TableCell>{metadataAudit.createdAt}</TableCell>
           </TableRow>
@@ -76,27 +91,34 @@ class HomeMainContent extends React.Component {
   /**
    * func: render()
    * 
-   * renders the component table
+   * renders the table
    */
   render() {
+    const { classes } = this.props;
+
     return (
       <React.Fragment>
-        <Paper>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Created At</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.dataElements}
-            </TableBody>
-          </Table>
+        <Paper className={classes.root}>
+          <div className={classes.title}>
+            <Typography variant="title">Data Elements</Typography>
+          </div>
+          <div className={classes.tableWrapper}>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Created At</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.state.dataElements}
+              </TableBody>
+            </Table>
+          </div>
         </Paper>
       </React.Fragment>
     );
   }
 }
 
-export default HomeMainContent;
+export default withStyles(styles)(HomeMain);

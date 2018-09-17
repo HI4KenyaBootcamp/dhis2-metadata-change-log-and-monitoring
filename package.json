@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "DHIS2 Metadata Change Log and Monitoring app",
   "main": "index.js",
-  "homepage": "https://test.hiskenya.org/kenya/api/apps/Metadata-Audit",
+  "homepage": "http://41.89.94.123:8080/dhis/api/apps/Metadata-Audit/",
   "license": "GPLv3",
   "scripts": {
     "start": "react-scripts start",

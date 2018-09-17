@@ -16,16 +16,19 @@
  */
 
 import React from 'react';
+
+import Grid from '@material-ui/core/Grid';
+
 import HomeMain from './HomeMain';
 import HomeRecent from './HomeRecent';
 import HomePopular from './HomePopular';
-import Grid from '@material-ui/core/Grid';
 
 class Home extends React.Component {
+  
   render() {
     return (
       <React.Fragment>
-        <Grid container spacing={24}>
+        <Grid container spacing={0}>
           <Grid item xs={12} md={6}>
             <HomeRecent />
           </Grid>

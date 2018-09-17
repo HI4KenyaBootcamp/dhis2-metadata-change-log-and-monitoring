@@ -17,15 +17,39 @@
 
 import React from 'react';
 
+import { Paper, Typography, withStyles } from '@material-ui/core';
+
+const styles = theme => ({
+  /**
+   * const: styles = func: theme()
+   * 
+   * css for the component being rendered
+   */
+  root: {
+    margin: theme.spacing.unit,
+  },
+  title: {
+    padding: theme.spacing.unit*2,
+  },
+});
+
 class HomeRecent extends React.Component {
+  /**
+   * func: render()
+   */
   render() {
+    const { classes } = this.props;
+
     return (
       <React.Fragment>
-        { /* some render components goe here */ }
-        <p>Home Recent</p>
+        <Paper className={classes.root}>
+          <div className={classes.title}>
+            <Typography variant="title">Recent</Typography>
+          </div>
+        </Paper>
       </React.Fragment>
     );
   }
 }
 
-export default HomeRecent;
+export default withStyles(styles)(HomeRecent);
