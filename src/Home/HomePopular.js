@@ -16,32 +16,24 @@
  */
 
 import React from 'react';
-import { init, getInstance } from 'd2/lib/d2';
-
-// initialize d2 library - local
-init({ baseUrl: 'https://test.hiskenya.org/kenya/api' });
-
-// get an instance of d2
-getInstance().then(d2 => {
-  // returns the api object
-  const api = d2.Api.getApi();
-
-  // do a get request for /api/resources
-  api.get('dataElements.json', {'fields': ':all', 'pageSize': '5'})
-  .then(resources => {
-    // for each object
-    resources.dataElements.forEach(consolePrint);
-  });
-});
-
-function consolePrint(item, index) {
-  console.log(item.id + ' | ' + item.displayName + ' | ' + item.valueType);
-}
-
+import axios from 'axios';
 
 /* some code goes here */
 
 class HomePopular extends React.Component {
+  return axios.get(URLConstants.USER_URL, { headers: { Authorization: `Bearer ${data.
+  constructor(props){
+    super(props)
+    this.state = {
+      metadata: [],
+      store: []
+    }
+  }
+
+  componentDidMount(){
+    axios.get('http://41.89.94.123:8080/dhis/api/metadataAudits.json')
+    .then(json => console.log(json))
+  }
   /* most code goes here */
   render() {
     return (
