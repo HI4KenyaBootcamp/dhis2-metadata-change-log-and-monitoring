@@ -16,6 +16,7 @@
  */
 
 import React from 'react';
+
 import { init, getInstance } from 'd2/lib/d2';
 
 import Table from '@material-ui/core/Table';
@@ -35,7 +36,7 @@ class HomeMainContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      metadataAudits: []
+      dataElements: []
     };
   }
 
@@ -46,8 +47,7 @@ class HomeMainContent extends React.Component {
    */
   componentWillMount() {
     // initialize d2 library baseURL
-    // init({ baseUrl: 'https://test.hiskenya.org/kenya/api' });
-    init({ baseUrl: 'http://localhost:8080/api' });
+    init({ baseUrl: process.env.REACT_APP_DOMAIN });
 
     // get d2 library instance
     getInstance().then(d2 => {
@@ -55,19 +55,19 @@ class HomeMainContent extends React.Component {
       const api = d2.Api.getApi();
     
       // send get request for /api/dataElements
-      api.get('metadataAudits.json', {'fields': 'uid,klass,createdAt', 'pageSize': '10'})
+      api.get('metadataAudits.json', {'fields': 'uid,klass,createdAt', 'pageSize': '10', 'klass': 'org.hisp.dhis.dataelement.DataElement'})
       .then(resources => {
         console.log(resources);
         // assign dataElemets to variable
-        let metadataAudits = resources.metadataAudits.map((metadataAudit) =>
-          <TableRow key={metadataAudit.uid}>
+        let dataElements = resources.metadataAudits.map((metadataAudit) =>
+          <TableRow key={metadataAudit.createdAt}>
             <TableCell component="th" scope="row">{metadataAudit.klass}</TableCell>
             <TableCell>{metadataAudit.createdAt}</TableCell>
           </TableRow>
         );
         // set this.state.dataElements
         this.setState({
-          metadataAudits: metadataAudits
+          dataElements: dataElements
         });
       });
     });
@@ -90,7 +90,7 @@ class HomeMainContent extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.state.metadataAudits}
+              {this.state.dataElements}
             </TableBody>
           </Table>
         </Paper>
