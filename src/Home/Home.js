@@ -19,7 +19,6 @@ import React from 'react';
 import HomePopular from './HomePopular';
 import HomeRecent from './HomeRecent';
 import HomeMain from './HomeMain/HomeMain';
-import HomeMainMenu from './HomeMain/HomeMainMenu';
 import Grid from '@material-ui/core/Grid';
 
 class Home extends React.Component {
@@ -31,7 +30,7 @@ class Home extends React.Component {
         <Grid container spacing={24}>
 
           <Grid item xs={12}>
-            <HomeMainMenu />
+          <HomeMain />
           </Grid>
 
           <Grid item xs={6}>
@@ -43,7 +42,6 @@ class Home extends React.Component {
           </Grid>
 
         </Grid>
-        <HomeMain />
       </React.Fragment>
     );
   }

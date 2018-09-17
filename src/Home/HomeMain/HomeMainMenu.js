@@ -42,7 +42,7 @@ const styles = theme => ({
   },
 });
 
-class MainMenu extends React.Component {
+class HomeMainMenu extends React.Component {
   state = {
     value: 0,
   };
@@ -96,9 +96,9 @@ class MainMenu extends React.Component {
   }
 }
 
-MainMenu.propTypes = {
+HomeMainMenu.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MainMenu);
+export default withStyles(styles)(HomeMainMenu);
 

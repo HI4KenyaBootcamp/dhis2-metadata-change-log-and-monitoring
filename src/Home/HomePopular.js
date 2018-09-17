@@ -61,7 +61,7 @@ function HomePopular(props) {
       <Table className={classes.table}>
         <TableHead>
         <Typography variant="title" id="tableTitle">
-            HomePopular/Most Edited
+            Popular/Most Edited
           </Typography>
           <TableRow>
             <TableCell>MetaData </TableCell>

@@ -61,7 +61,7 @@ function HomeRecent(props) {
       <Table className={classes.table}>
         <TableHead>
         <Typography variant="title" id="tableTitle">
-            HomeRecent/Latest Updates
+        Recent/Latest Updates
           </Typography>
           <TableRow>
             <TableCell>MetaData </TableCell>

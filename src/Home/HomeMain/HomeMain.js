@@ -18,6 +18,7 @@
 import React from 'react';
 import HomeMainSidebar from './HomeMainSidebar';
 import HomeMainContent from './HomeMainContent';
+import HomeMainMenu from './HomeMainMenu';
 
 class HomeMain extends React.Component {
   render() {
@@ -25,6 +26,7 @@ class HomeMain extends React.Component {
       <React.Fragment>
         <HomeMainSidebar />
         <HomeMainContent />
+        <HomeMainMenu />
       </React.Fragment>
     );
   }
