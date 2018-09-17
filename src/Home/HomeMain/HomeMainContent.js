@@ -35,7 +35,7 @@ class HomeMainContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataElements: []
+      metadataAudits: []
     };
   }
 
@@ -46,7 +46,8 @@ class HomeMainContent extends React.Component {
    */
   componentWillMount() {
     // initialize d2 library baseURL
-    init({ baseUrl: 'https://test.hiskenya.org/kenya/api' });
+    // init({ baseUrl: 'https://test.hiskenya.org/kenya/api' });
+    init({ baseUrl: 'http://localhost:8080/api' });
 
     // get d2 library instance
     getInstance().then(d2 => {
@@ -54,18 +55,19 @@ class HomeMainContent extends React.Component {
       const api = d2.Api.getApi();
     
       // send get request for /api/dataElements
-      api.get('dataElements.json', {'fields': 'id,name,valueType,domainType,lastUpdated', 'pageSize': '20'})
+      api.get('metadataAudits.json', {'fields': 'uid,klass,createdAt', 'pageSize': '10'})
       .then(resources => {
+        console.log(resources);
         // assign dataElemets to variable
-        let dataElements = resources.dataElements.map((dataElement) =>
-          <TableRow key={dataElement.id}>
-            <TableCell component="th" scope="row">{dataElement.name}</TableCell>
-            <TableCell>{dataElement.lastUpdated}</TableCell>
+        let metadataAudits = resources.metadataAudits.map((metadataAudit) =>
+          <TableRow key={metadataAudit.uid}>
+            <TableCell component="th" scope="row">{metadataAudit.klass}</TableCell>
+            <TableCell>{metadataAudit.createdAt}</TableCell>
           </TableRow>
         );
         // set this.state.dataElements
         this.setState({
-          dataElements: dataElements
+          metadataAudits: metadataAudits
         });
       });
     });
@@ -84,11 +86,11 @@ class HomeMainContent extends React.Component {
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
-                <TableCell>Last Updated</TableCell>
+                <TableCell>Created At</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.state.dataElements}
+              {this.state.metadataAudits}
             </TableBody>
           </Table>
         </Paper>

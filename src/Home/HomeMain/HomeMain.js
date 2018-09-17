@@ -16,17 +16,17 @@
  */
 
 import React from 'react';
-import HomeMainMenu from './HomeMainMenu';
 import HomeMainSidebar from './HomeMainSidebar';
 import HomeMainContent from './HomeMainContent';
+import HomeMainMenu from './HomeMainMenu';
 
 class HomeMain extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <HomeMainMenu />
         <HomeMainSidebar />
         <HomeMainContent />
+        <HomeMainMenu />
       </React.Fragment>
     );
   }
