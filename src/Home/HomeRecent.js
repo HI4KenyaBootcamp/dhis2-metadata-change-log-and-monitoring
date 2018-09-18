@@ -15,25 +15,117 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React from 'react';
+import React from "react";
+import { init, getInstance } from "d2/lib/d2";
 
-import { Paper, Typography, withStyles } from '@material-ui/core';
+// import { Paper, Typography, withStyles } from "@material-ui/core";
+import {
+  AppBar,
+  List,
+  ListItem,
+  Drawer,
+  Tabs,
+  Tab,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableFooter,
+  Paper,
+  Typography,
+  withStyles
+} from "@material-ui/core/";
 
 const styles = theme => ({
   /**
    * const: styles = func: theme()
-   * 
+   *
    * css for the component being rendered
    */
   root: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit
   },
   title: {
-    padding: theme.spacing.unit*2,
+    padding: theme.spacing.unit * 2
   },
+
+  tableWrapper: {
+    overflowX: "auto"
+  },
+  table: {
+    minWidth: 540
+  },
+  title: {
+    padding: theme.spacing.unit * 2
+  },
+  tab: {
+    flexGrow: 1,
+    minHeight: 100,
+    zIndex: 1,
+    overflow: "hidden",
+    position: "relative",
+    display: "flex"
+  },
+  drawerPaper: {
+    position: "relative",
+    width: 240
+  },
+  content: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing.unit * 3,
+    minWidth: 0
+  }
 });
 
 class HomeRecent extends React.Component {
+  /**
+   * func: constructor()
+   *
+   * initialization function
+   * @param {*} props
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      recents: [],
+      value: 0
+    };
+  }
+  componentWillMount() {
+    init({ baseUrl: process.env.REACT_APP_DOMAIN });
+    // get d2 library instance
+    getInstance().then(d2 => {
+      // return the api object
+      const api = d2.Api.getApi();
+
+      // send get request for /api/dataElements
+      api
+        .get("metadataAudits", {
+          fields: "uid,klass,createdAt,createdBy,type",
+          pageSize: "5",
+          klass: "org.hisp.dhis.dataelement.DataElement"
+        })
+        .then(resources => {
+          console.log(resources);
+          // assign dataElemets to variable
+          let dataElements = resources.metadataAudits.map(metadataAudit => (
+            <TableRow key={metadataAudit.createdAt}>
+              <TableCell component="th" scope="row">
+                {metadataAudit.klass}
+              </TableCell>
+              <TableCell>{metadataAudit.createdAt}</TableCell>
+            </TableRow>
+          ));
+          // set this.state.dataElements
+          this.setState({
+            dataElements: dataElements
+          });
+        });
+    });
+  }
+
   /**
    * func: render()
    */
@@ -47,8 +139,21 @@ class HomeRecent extends React.Component {
             <Typography variant="title">Recent</Typography>
           </div>
 
-          { /* your render code will go here  */}
-
+          {/* your render code will go here  */}
+          <div className={classes.tableWrapper}>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Metadata Type</TableCell>
+                  <TableCell>Metadata Value</TableCell>
+                  <TableCell> Action</TableCell>
+                  <TableCell>User</TableCell>
+                  <TableCell> Time</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{this.state.recents}</TableBody>
+            </Table>
+          </div>
         </Paper>
       </React.Fragment>
     );
