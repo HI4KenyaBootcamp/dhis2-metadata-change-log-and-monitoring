@@ -16,16 +16,46 @@
  */
 
 import React from 'react';
+
+import { AppBar, Tabs, Tab, Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, withStyles } from '@material-ui/core/';
+
 import { init, getInstance } from 'd2/lib/d2';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+const styles = theme => ({
+  /**
+   * const: styles = func: theme()
+   * 
+   * css for the component being rendered
+   */
+  root: {
+    margin: theme.spacing.unit,
+  },
+  tableWrapper: {
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 540,
+  },
+  title: {
+    padding: theme.spacing.unit*2,
+  },
+});
 
-class HomeMainContent extends React.Component {
+/**
+ * func: TabContainer
+ * 
+ * container for the tabs
+ */
+function TabContainer(props) {
+  return (
+    <Typography component="div" style={{ padding: 8 * 3 }}>
+      {props.children}
+    </Typography>
+  );
+}
+
+
+class HomeMain extends React.Component {
   /**
    * func: constructor() 
    * 
@@ -35,7 +65,8 @@ class HomeMainContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      metadataAudits: []
+      dataElements: [],
+      value: 0,
     };
   }
 
@@ -46,8 +77,7 @@ class HomeMainContent extends React.Component {
    */
   componentWillMount() {
     // initialize d2 library baseURL
-    // init({ baseUrl: 'https://test.hiskenya.org/kenya/api' });
-    init({ baseUrl: 'http://localhost:8080/api' });
+    init({ baseUrl: process.env.REACT_APP_DOMAIN });
 
     // get d2 library instance
     getInstance().then(d2 => {
@@ -55,48 +85,86 @@ class HomeMainContent extends React.Component {
       const api = d2.Api.getApi();
     
       // send get request for /api/dataElements
-      api.get('metadataAudits.json', {'fields': 'uid,klass,createdAt', 'pageSize': '10'})
+      api.get('metadataAudits.json', {'fields': 'uid,klass,createdAt,createdBy,type', 'pageSize': '10', 'klass': 'org.hisp.dhis.dataelement.DataElement'})
       .then(resources => {
         console.log(resources);
         // assign dataElemets to variable
-        let metadataAudits = resources.metadataAudits.map((metadataAudit) =>
-          <TableRow key={metadataAudit.uid}>
+        let dataElements = resources.metadataAudits.map((metadataAudit) =>
+          <TableRow key={(metadataAudit.createdAt)}>
             <TableCell component="th" scope="row">{metadataAudit.klass}</TableCell>
             <TableCell>{metadataAudit.createdAt}</TableCell>
           </TableRow>
         );
         // set this.state.dataElements
         this.setState({
-          metadataAudits: metadataAudits
+          dataElements: dataElements
         });
       });
     });
   }
 
   /**
+   * func: handleChange()
+   * 
+   * changes tabs
+   */
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+
+  /**
    * func: render()
    * 
-   * renders the component table
+   * renders the table
    */
   render() {
+    const { classes } = this.props;
+    const { value } = this.state;
+
     return (
       <React.Fragment>
-        <Paper>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Created At</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.metadataAudits}
-            </TableBody>
-          </Table>
+        <Paper className={classes.root}>
+          <AppBar position="static">
+            <Tabs value={value} onChange={this.handleChange}>
+              <Tab label="Category" />
+              <Tab label="Data Element" />
+              <Tab label="Data Set" />
+              <Tab label="Indicator" />
+              <Tab label="Organization Unit" />
+              <Tab label="Program" />
+              <Tab label="Validation" />
+              <Tab label="Other" />
+            </Tabs>
+          </AppBar>
+          {value === 0 && <TabContainer> {/* category */} </TabContainer>}
+          {value === 1 && <TabContainer>
+              <div className={classes.title}>
+                <Typography variant="title">Data Elements</Typography>
+              </div>
+              <div className={classes.tableWrapper}>
+                <Table className={classes.table}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Created At</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {this.state.dataElements}
+                  </TableBody>
+                </Table>
+              </div>
+          </TabContainer>}
+          {value === 2 && <TabContainer> {/* data set */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* indicator */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* organization unit */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* program */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* validation */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* other */} </TabContainer>}
         </Paper>
       </React.Fragment>
     );
   }
 }
 
-export default HomeMainContent;
+export default withStyles(styles)(HomeMain);

@@ -14,119 +14,125 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React from 'react';
-<<<<<<< HEAD
-import axios from 'axios';
 
-/* some code goes here */
+import React from 'react';
+
+import { AppBar, Tabs, Tab, Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, withStyles } from '@material-ui/core/';
+
+import { init, getInstance } from 'd2/lib/d2';
+
+
+const styles = theme => ({
+  /**
+   * const: styles = func: theme()
+   * 
+   * css for the component being rendered
+   */
+  root: {
+    margin: theme.spacing.unit,
+  },
+  tableWrapper: {
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 540,
+  },
+  title: {
+    padding: theme.spacing.unit*2,
+  },
+});
+
+/**
+ * func: TabContainer
+ * 
+ * container for the tabs
+ */
+function TabContainer(props) {
+  return (
+    <Typography component="div" style={{ padding: 8 * 3 }}>
+      {props.children}
+    </Typography>
+  );
+}
+
 
 class HomePopular extends React.Component {
-  return axios.get(URLConstants.USER_URL, { headers: { Authorization: `Bearer ${data.
-  constructor(props){
-    super(props)
+  /**
+   * func: constructor() 
+   * 
+   * initialization function
+   * @param {*} props 
+   */
+  constructor(props) {
+    super(props);
     this.state = {
-      metadata: [],
-      store: []
-    }
+      metadataAudits: [],
+      value: 0,
+    };
   }
 
-  componentDidMount(){
-    axios.get('http://41.89.94.123:8080/dhis/api/metadataAudits.json')
-    .then(json => console.log(json))
+  /**
+   * func: componentWillMount()
+   * 
+   * in-built ReactJS function, executed before rendering
+   */
+  componentWillMount() {
+    // initialize d2 library baseURL
+    init({ baseUrl: process.env.REACT_APP_DOMAIN });
+
+    // get d2 library instance
+    getInstance().then(d2 => {
+      // return the api object
+      const api = d2.Api.getApi();
+    
+      // send get request for /api/metadataAudits
+      api.get('metadataAudits.json', {'fields': 'klass,uid,createdBy,type', 'pageSize': '5' , 'klass': 'org.hisp.dhis.metadataAudits.metadataAudits'})
+      .then(resources => {
+        console.log(resources);
+        // assign metadataAudits to variable
+        let metadataAudits = resources.metadataAudits.map((metadataAudits) =>
+        <TableRow key={metadataAudits.klass}>
+            <TableCell component="th" scope="row">{metadataAudits.klass}</TableCell>
+            <TableCell>{metadataAudits.uid}</TableCell>
+            <TableCell>{metadataAudits.createdBy}</TableCell>
+            <TableCell>{metadataAudits.type}</TableCell>
+            <TableCell>{metadataAudits.version}</TableCell>
+          </TableRow>
+        );
+        // set this.state.metadataAudits
+        this.setState({
+          metadataAudits: metadataAudits
+        });
+      });
+    });
   }
-  /* most code goes here */
+
+
+  
+  
   render() {
     return (
       <React.Fragment>
+         <Paper>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>value</TableCell>
+                <TableCell>user</TableCell>
+                <TableCell>Action</TableCell>
+                <TableCell>Number of edits</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.state.metadataAudits}
+            </TableBody>
+          </Table>
+        </Paper>
         {/* more render code goes here */} 
       </React.Fragment>
     );
   }
-=======
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-
-
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
-  },
-  table: {
-    minWidth: 700,
-  },
-});
-
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
->>>>>>> f9fce9f6a4d34ea43a2aa42e2c437bcd43fb8ebc
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-function HomePopular(props) {
-  const { classes } = props;
-
-  return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-        <Typography variant="title" id="tableTitle">
-            Popular/Most Edited
-          </Typography>
-          <TableRow>
-            <TableCell>MetaData </TableCell>
-            <TableCell numeric >Value</TableCell>
-            <TableCell numeric>User</TableCell>
-            <TableCell numeric>Action</TableCell>
-            <TableCell numeric>Number of Edits</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => {
-            return (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell numeric href="#">{row.calories}</TableCell>
-                <TableCell numeric href="#">{row.fat}</TableCell>
-                <TableCell numeric href="#">{row.carbs}</TableCell>
-                <TableCell numeric href="#">{row.protein}</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-        <Button variant="contained" color="primary">
-        View All
-      </Button>
-      </Table>
-    </Paper>
-  );
-}
-
-HomePopular.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(HomePopular);
-
-
+export default HomePopular;
