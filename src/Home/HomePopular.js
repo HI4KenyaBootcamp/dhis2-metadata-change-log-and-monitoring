@@ -19,7 +19,7 @@ import React from 'react';
 
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, withStyles } from '@material-ui/core/';
 
-import { init, getInstance } from 'd2/lib/d2';
+import { getInstance } from 'd2/lib/d2';
 
 const styles = theme => ({
   /**
@@ -62,16 +62,13 @@ class HomePopular extends React.Component {
    * in-built ReactJS function, executed before rendering
    */
   componentWillMount() {
-    // initialize d2 library baseURL
-    init({ baseUrl: process.env.REACT_APP_DOMAIN });
-
     // get d2 library instance
     getInstance().then(d2 => {
       // return the api object
       const api = d2.Api.getApi();
     
       // send get request for /api/metadataAudits
-      api.get('metadataAudits')
+      api.get('metadataAudits', {'fields': 'uid,klass,createdAt,createdBy,type', 'pageSize': '5',})
       .then(resources => {
         console.log(resources);
         // assign metadataAudits to variable
@@ -81,7 +78,6 @@ class HomePopular extends React.Component {
             <TableCell>{metadataAudit.uid}</TableCell>
             <TableCell>{metadataAudit.createdBy}</TableCell>
             <TableCell>{metadataAudit.type}</TableCell>
-            <TableCell>{metadataAudit.version}</TableCell>
           </TableRow>
         );
         // set this.state.metadataAudits
@@ -105,21 +101,21 @@ class HomePopular extends React.Component {
             <Typography variant="title">Popular</Typography>
           </div>
 
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>value</TableCell>
-                <TableCell>user</TableCell>
-                <TableCell>Action</TableCell>
-                <TableCell>Number of edits</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.metadataAudits}
-            </TableBody>
-          </Table>
-
+          <div className={classes.tableWrapper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>value</TableCell>
+                  <TableCell>user</TableCell>
+                  <TableCell>Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.state.metadataAudits}
+              </TableBody>
+            </Table>
+          </div> 
         </Paper>
       </React.Fragment>
     );
