@@ -14,13 +14,19 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
 import React from 'react';
 
 import { AppBar, Tabs, Tab, Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, withStyles } from '@material-ui/core/';
 
 import { init, getInstance } from 'd2/lib/d2';
+=======
 
+import React from 'react';
+>>>>>>> 7f906b23592570732620cfafcb0bd97b7ab669f6
+
+import { Paper, Typography, withStyles } from '@material-ui/core';
 
 const styles = theme => ({
   /**
@@ -30,6 +36,7 @@ const styles = theme => ({
    */
   root: {
     margin: theme.spacing.unit,
+<<<<<<< HEAD
   },
   tableWrapper: {
     overflowX: 'auto',
@@ -37,11 +44,15 @@ const styles = theme => ({
   table: {
     minWidth: 540,
   },
+=======
+  },
+>>>>>>> 7f906b23592570732620cfafcb0bd97b7ab669f6
   title: {
     padding: theme.spacing.unit*2,
   },
 });
 
+<<<<<<< HEAD
 /**
  * func: TabContainer
  * 
@@ -136,3 +147,28 @@ class HomePopular extends React.Component {
 }
 
 export default HomePopular;
+=======
+class HomePopular extends React.Component {
+  /**
+   * func: render()
+   */
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <React.Fragment>
+        <Paper className={classes.root}>
+          <div className={classes.title}>
+            <Typography variant="title">Popular</Typography>
+          </div>
+
+          { /* your render code will go here  */}
+
+        </Paper>
+      </React.Fragment>
+    );
+  }
+}
+
+export default withStyles(styles)(HomePopular);
+>>>>>>> 7f906b23592570732620cfafcb0bd97b7ab669f6
