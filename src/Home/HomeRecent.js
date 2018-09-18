@@ -107,20 +107,23 @@ class HomeRecent extends React.Component {
           pageSize: "5",
           klass: "org.hisp.dhis.dataelement.DataElement"
         })
-        .then(resources => {
-          console.log(resources);
+        .then(response => {
+          console.log(response);
           // assign dataElemets to variable
-          let dataElements = resources.metadataAudits.map(metadataAudit => (
-            <TableRow key={metadataAudit.createdAt}>
+          let recents = response.metadataAudits.map(recentAction => (
+            <TableRow key={recentAction.createdAt}>
               <TableCell component="th" scope="row">
-                {metadataAudit.klass}
+                {recentAction.klass}
               </TableCell>
-              <TableCell>{metadataAudit.createdAt}</TableCell>
+              <TableCell>{recentAction.createdAt}</TableCell>
+              <TableCell>{recentAction.createdAt}</TableCell>
+              <TableCell>{recentAction.createdAt}</TableCell>
+              <TableCell>{recentAction.createdAt}</TableCell>
             </TableRow>
           ));
-          // set this.state.dataElements
+          // set this.state.recents
           this.setState({
-            dataElements: dataElements
+            recents: recents
           });
         });
     });
