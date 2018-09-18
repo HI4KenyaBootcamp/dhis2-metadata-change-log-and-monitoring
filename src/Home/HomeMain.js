@@ -161,7 +161,7 @@ class HomeMain extends React.Component {
           </AppBar>
           {value === 0 && <TabContainer> {/* category */} </TabContainer>}
           {value === 1 && <TabContainer>
-            <sector className={classes.tab}>
+            <section className={classes.tab}>
               
               <Drawer
                 variant="permanent"
@@ -206,7 +206,7 @@ class HomeMain extends React.Component {
                 </div>
               </main>
 
-            </sector>
+            </section>
           </TabContainer>}
           {value === 2 && <TabContainer> {/* data set */} </TabContainer>}
           {value === 3 && <TabContainer> {/* indicator */} </TabContainer>}
