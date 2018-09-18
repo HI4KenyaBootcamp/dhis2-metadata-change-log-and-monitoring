@@ -14,90 +14,42 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 
-
+import { Paper, Typography, withStyles } from '@material-ui/core';
 
 const styles = theme => ({
+  /**
+   * const: styles = func: theme()
+   * 
+   * css for the component being rendered
+   */
   root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
+    margin: theme.spacing.unit,
   },
-  table: {
-    minWidth: 700,
+  title: {
+    padding: theme.spacing.unit*2,
   },
 });
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
+class HomePopular extends React.Component {
+  /**
+   * func: render()
+   */
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <React.Fragment>
+        <Paper className={classes.root}>
+          <div className={classes.title}>
+            <Typography variant="title">Popular</Typography>
+          </div>
+        </Paper>
+      </React.Fragment>
+    );
+  }
 }
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-function HomePopular(props) {
-  const { classes } = props;
-
-  return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-        <Typography variant="title" id="tableTitle">
-            Popular/Most Edited
-          </Typography>
-          <TableRow>
-            <TableCell>MetaData </TableCell>
-            <TableCell numeric >Value</TableCell>
-            <TableCell numeric>User</TableCell>
-            <TableCell numeric>Action</TableCell>
-            <TableCell numeric>Number of Edits</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => {
-            return (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell numeric href="#">{row.calories}</TableCell>
-                <TableCell numeric href="#">{row.fat}</TableCell>
-                <TableCell numeric href="#">{row.carbs}</TableCell>
-                <TableCell numeric href="#">{row.protein}</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-        <Button variant="contained" color="primary">
-        View All
-      </Button>
-      </Table>
-    </Paper>
-  );
-}
-
-HomePopular.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(HomePopular);
-
-
