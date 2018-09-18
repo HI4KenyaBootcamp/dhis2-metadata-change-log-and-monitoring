@@ -46,6 +46,9 @@ class HomeRecent extends React.Component {
           <div className={classes.title}>
             <Typography variant="title">Recent</Typography>
           </div>
+
+          { /* your render code will go here  */}
+
         </Paper>
       </React.Fragment>
     );

@@ -46,6 +46,9 @@ class HomePopular extends React.Component {
           <div className={classes.title}>
             <Typography variant="title">Popular</Typography>
           </div>
+
+          { /* your render code will go here  */}
+
         </Paper>
       </React.Fragment>
     );
