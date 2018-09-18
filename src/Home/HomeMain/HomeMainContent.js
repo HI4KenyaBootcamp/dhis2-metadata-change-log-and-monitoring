@@ -17,7 +17,7 @@
 
 import React from 'react';
 
-import { AppBar, List, ListItem, Drawer, Tabs, Tab, Table, TableBody, TableCell, TableHead, TableRow, TableFooter, Paper, Typography, withStyles } from '@material-ui/core/';
+import { AppBar, Tabs, Tab, Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, withStyles } from '@material-ui/core/';
 
 import { init, getInstance } from 'd2/lib/d2';
 
@@ -38,24 +38,6 @@ const styles = theme => ({
   },
   title: {
     padding: theme.spacing.unit*2,
-  },
-  tab: {
-    flexGrow: 1,
-    minHeight: 100,
-    zIndex: 1,
-    overflow: 'hidden',
-    position: 'relative',
-    display: 'flex',
-  },
-  drawerPaper: {
-    position: 'relative',
-    width: 240,
-  },
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-    minWidth: 0, // So the Typography noWrap works
   },
 });
 
@@ -103,7 +85,7 @@ class HomeMain extends React.Component {
       const api = d2.Api.getApi();
     
       // send get request for /api/dataElements
-      api.get('metadataAudits', {'fields': 'uid,klass,createdAt,createdBy,type', 'pageSize': '10', 'klass': 'org.hisp.dhis.dataelement.DataElement'})
+      api.get('metadataAudits.json', {'fields': 'uid,klass,createdAt,createdBy,type', 'pageSize': '10', 'klass': 'org.hisp.dhis.dataelement.DataElement'})
       .then(resources => {
         console.log(resources);
         // assign dataElemets to variable
@@ -143,12 +125,7 @@ class HomeMain extends React.Component {
       <React.Fragment>
         <Paper className={classes.root}>
           <AppBar position="static">
-            <Tabs 
-              value={value} 
-              onChange={this.handleChange}
-              scrollable
-              scrollButtons="auto"
-            >
+            <Tabs value={value} onChange={this.handleChange}>
               <Tab label="Category" />
               <Tab label="Data Element" />
               <Tab label="Data Set" />
@@ -161,59 +138,29 @@ class HomeMain extends React.Component {
           </AppBar>
           {value === 0 && <TabContainer> {/* category */} </TabContainer>}
           {value === 1 && <TabContainer>
-            <section className={classes.tab}>
-              
-              <Drawer
-                variant="permanent"
-                classes={{
-                  paper: classes.drawerPaper,
-                }}
-              >
-                <List>
-                  <ListItem button>
-                    Data Element
-                  </ListItem>
-                  <ListItem button>
-                    Data Element Group
-                  </ListItem>
-                  <ListItem button>
-                    Data Element Group Set
-                  </ListItem>
-                </List>
-              </Drawer>
-
-              <main className={classes.content}>
-                <div className={classes.title}>
-                  <Typography variant="title">Data Elements</Typography>
-                </div>
-                <div className={classes.tableWrapper}>
-                  <Table className={classes.table}>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Last Audit Time</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {this.state.dataElements}
-                    </TableBody>
-                    <TableFooter>
-                      <TableRow>
-                        <TableCell colSpan={3}>You have authorization to view this data.</TableCell>
-                      </TableRow>
-                    </TableFooter>
-                  </Table>
-                </div>
-              </main>
-
-            </section>
+              <div className={classes.title}>
+                <Typography variant="title">Data Elements</Typography>
+              </div>
+              <div className={classes.tableWrapper}>
+                <Table className={classes.table}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Created At</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {this.state.dataElements}
+                  </TableBody>
+                </Table>
+              </div>
           </TabContainer>}
           {value === 2 && <TabContainer> {/* data set */} </TabContainer>}
           {value === 3 && <TabContainer> {/* indicator */} </TabContainer>}
-          {value === 4 && <TabContainer> {/* organization unit */} </TabContainer>}
-          {value === 5 && <TabContainer> {/* program */} </TabContainer>}
-          {value === 6 && <TabContainer> {/* validation */} </TabContainer>}
-          {value === 7 && <TabContainer> {/* other */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* organization unit */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* program */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* validation */} </TabContainer>}
+          {value === 3 && <TabContainer> {/* other */} </TabContainer>}
         </Paper>
       </React.Fragment>
     );
