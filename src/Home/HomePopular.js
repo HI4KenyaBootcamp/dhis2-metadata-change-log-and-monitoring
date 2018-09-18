@@ -17,7 +17,9 @@
 
 import React from 'react';
 
-import { Paper, Typography, withStyles } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, withStyles } from '@material-ui/core/';
+
+import { init, getInstance } from 'd2/lib/d2';
 
 const styles = theme => ({
   /**
@@ -31,9 +33,65 @@ const styles = theme => ({
   title: {
     padding: theme.spacing.unit*2,
   },
+  tableWrapper: {
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 540,
+  },
 });
 
 class HomePopular extends React.Component {
+  /**
+   * func: constructor() 
+   * 
+   * initialization function
+   * @param {*} props 
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      metadataAudits: [],
+      value: 0,
+    };
+  }
+
+  /**
+   * func: componentWillMount()
+   * 
+   * in-built ReactJS function, executed before rendering
+   */
+  componentWillMount() {
+    // initialize d2 library baseURL
+    init({ baseUrl: process.env.REACT_APP_DOMAIN });
+
+    // get d2 library instance
+    getInstance().then(d2 => {
+      // return the api object
+      const api = d2.Api.getApi();
+    
+      // send get request for /api/metadataAudits
+      api.get('metadataAudits')
+      .then(resources => {
+        console.log(resources);
+        // assign metadataAudits to variable
+        let metadataAudits = resources.metadataAudits.map((metadataAudit) =>
+        <TableRow key={metadataAudit.createdAt}>
+            <TableCell component="th" scope="row">{metadataAudit.klass}</TableCell>
+            <TableCell>{metadataAudit.uid}</TableCell>
+            <TableCell>{metadataAudit.createdBy}</TableCell>
+            <TableCell>{metadataAudit.type}</TableCell>
+            <TableCell>{metadataAudit.version}</TableCell>
+          </TableRow>
+        );
+        // set this.state.metadataAudits
+        this.setState({
+          metadataAudits: metadataAudits
+        });
+      });
+    });
+  }
+
   /**
    * func: render()
    */
@@ -47,7 +105,20 @@ class HomePopular extends React.Component {
             <Typography variant="title">Popular</Typography>
           </div>
 
-          { /* your render code will go here  */}
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>value</TableCell>
+                <TableCell>user</TableCell>
+                <TableCell>Action</TableCell>
+                <TableCell>Number of edits</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.state.metadataAudits}
+            </TableBody>
+          </Table>
 
         </Paper>
       </React.Fragment>
