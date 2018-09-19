@@ -19,7 +19,7 @@ import React from 'react';
 
 import { AppBar, List, ListItem, Drawer, Tabs, Tab, Table, TableBody, TableCell, TableHead, TableRow, TableFooter, Paper, Typography, withStyles } from '@material-ui/core/';
 
-import { init, getInstance } from 'd2/lib/d2';
+import { getInstance } from 'd2/lib/d2';
 
 const styles = theme => ({
   /**
@@ -94,9 +94,6 @@ class HomeMain extends React.Component {
    * in-built ReactJS function, executed before rendering
    */
   componentWillMount() {
-    // initialize d2 library baseURL
-    init({ baseUrl: process.env.REACT_APP_DOMAIN });
-
     // get d2 library instance
     getInstance().then(d2 => {
       // return the api object

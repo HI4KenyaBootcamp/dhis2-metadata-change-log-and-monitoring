@@ -17,11 +17,29 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
+
 import Home from './Home/Home';
 
-class MetadataAudit extends React.Component {
+import { init } from 'd2/lib/d2';
 
+class MetadataAudit extends React.Component {
+  /**
+   * func: componentWillMount()
+   * 
+   * in-built ReactJS function, executed before rendering
+   */
+  componentWillMount() {
+    // initialize d2 library baseURL
+    init({ baseUrl: process.env.REACT_APP_DOMAIN });
+  }
+
+  /**
+   * func: render()
+   * 
+   * root render
+   */
   render() {
     return (
       <React.Fragment>
