@@ -28,8 +28,9 @@ import {
   Tab,
   Table,
   TableBody,
-  TableCell,
+  p,
   TableHead,
+  TableCell,
   TableRow,
   TableFooter,
   Paper,
@@ -51,7 +52,7 @@ const styles = theme => ({
   },
 
   tableWrapper: {
-    overflowX: "auto"
+    overflowresourceName: "auto"
   },
   table: {
     minWidth: 540
@@ -60,19 +61,19 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2
   },
   tab: {
-    flexGrow: 1,
+    fleresourceNameGrow: 1,
     minHeight: 100,
-    zIndex: 1,
+    zInderesourceName: 1,
     overflow: "hidden",
     position: "relative",
-    display: "flex"
+    display: "fleresourceName"
   },
   drawerPaper: {
     position: "relative",
     width: 240
   },
   content: {
-    flexGrow: 1,
+    fleresourceNameGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
     minWidth: 0
@@ -86,6 +87,7 @@ class HomeRecent extends React.Component {
    * initialization function
    * @param {*} props
    */
+
   constructor(props) {
     super(props);
     this.state = {
@@ -93,6 +95,7 @@ class HomeRecent extends React.Component {
       value: 0
     };
   }
+
   componentWillMount() {
     init({ baseUrl: process.env.REACT_APP_DOMAIN });
     // get d2 library instance
@@ -104,23 +107,56 @@ class HomeRecent extends React.Component {
       api
         .get("metadataAudits", {
           fields: "uid,klass,createdAt,createdBy,type",
-          pageSize: "5",
-          klass: "org.hisp.dhis.dataelement.DataElement"
+          pageSize: "5"
+          // klass: "org.hisp.dhis.dataelement.DataElement"
         })
+
         .then(response => {
           console.log(response);
           // assign dataElemets to variable
-          let recents = response.metadataAudits.map(recentAction => (
-            <TableRow key={recentAction.createdAt}>
-              <TableCell component="th" scope="row">
-                {recentAction.klass}
-              </TableCell>
-              <TableCell>{recentAction.type}</TableCell>
-              <TableCell>{recentAction.createdAt}</TableCell>
-              <TableCell>{recentAction.createdAt}</TableCell>
-              <TableCell>{recentAction.createdBy}</TableCell>
-            </TableRow>
-          ));
+          let recents = response.metadataAudits.map(function test(
+            recentAction
+          ) {
+            var metadataType = recentAction.klass.split(".")[4];
+            var resourceName = metadataType.charAt(0).toLowerCase();
+            resourceName = resourceName + metadataType.slice(1) + "s";
+
+            let metadataName;
+            api
+              .get(resourceName + "/" + recentAction.uid, {
+                fields: "displayName",
+                pageSize: "5"
+                // klass: "org.hisp.dhis.dataelement.DataElement"
+              })
+              .then(myRes => {
+                metadataName = myRes.displayName;
+                return metadataName;
+              });
+            console.log(metadataName);
+            return (
+              <TableHead>
+                <TableRow>
+                  {/* key={recentAction.createdAt}> */}
+                  <TableCell component="th" scope="row">
+                    {metadataType}
+                    <br />
+                    <br />
+                    {recentAction.uid}
+                    <br />
+                    <br />
+                    {recentAction.createdBy}
+                    <br />
+                    <br />
+                    {recentAction.type}
+                    <br />
+                    <br />
+                    {recentAction.createdAt}
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+            );
+          });
+
           // set this.state.recents
           this.setState({
             recents: recents
@@ -144,20 +180,25 @@ class HomeRecent extends React.Component {
 
         {/* your render code will go here  */}
         <div className={classes.tableWrapper}>
-          <Table className={classes.table}>
+          {/* <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell>Metadata Type</TableCell>
-                <TableCell>Metadata Value</TableCell>
-                <TableCell> Action</TableCell>
-                <TableCell>User</TableCell>
-                <TableCell> Time</TableCell>
+                {/* key={recentAction.createdAt}> */}
+          {/* <TableCell component="th" scope="row">
+                  {metadataType}
+                  <br />
+                  {recentAction.uid}
+                  <br />
+                  {recentAction.createdBy}
+                  <br />
+                  {recentAction.type}
+                  <br />
+                  {recentAction.createdAt}
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>{this.state.recents}</TableBody>
-          </Table>
-          {/* <div className={classes.tableWrapper}>
-          { /* your rendered table will go here  */}
+            </TableHead> */}{" "}
+          <TableBody>{this.state.recents}</TableBody>
+          {/* // </Table> */}
         </div>
       </Paper>
       // {/* </React.Fragment> */}
