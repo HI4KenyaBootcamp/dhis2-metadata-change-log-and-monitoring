@@ -115,10 +115,10 @@ class HomeRecent extends React.Component {
               <TableCell component="th" scope="row">
                 {recentAction.klass}
               </TableCell>
+              <TableCell>{recentAction.type}</TableCell>
               <TableCell>{recentAction.createdAt}</TableCell>
               <TableCell>{recentAction.createdAt}</TableCell>
-              <TableCell>{recentAction.createdAt}</TableCell>
-              <TableCell>{recentAction.createdAt}</TableCell>
+              <TableCell>{recentAction.createdBy}</TableCell>
             </TableRow>
           ));
           // set this.state.recents
@@ -136,29 +136,31 @@ class HomeRecent extends React.Component {
     const { classes } = this.props;
 
     return (
-      <React.Fragment>
-        <Paper className={classes.root}>
-          <div className={classes.title}>
-            <Typography variant="title">Recent</Typography>
-          </div>
+      // <React.Fragment>
+      <Paper className={classes.root}>
+        <div className={classes.title}>
+          <Typography variant="title">Recent</Typography>
+        </div>
 
-          {/* your render code will go here  */}
-          <div className={classes.tableWrapper}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Metadata Type</TableCell>
-                  <TableCell>Metadata Value</TableCell>
-                  <TableCell> Action</TableCell>
-                  <TableCell>User</TableCell>
-                  <TableCell> Time</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>{this.state.recents}</TableBody>
-            </Table>
-          </div>
-        </Paper>
-      </React.Fragment>
+        {/* your render code will go here  */}
+        <div className={classes.tableWrapper}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Metadata Type</TableCell>
+                <TableCell>Metadata Value</TableCell>
+                <TableCell> Action</TableCell>
+                <TableCell>User</TableCell>
+                <TableCell> Time</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>{this.state.recents}</TableBody>
+          </Table>
+          {/* <div className={classes.tableWrapper}>
+          { /* your rendered table will go here  */}
+        </div>
+      </Paper>
+      // {/* </React.Fragment> */}
     );
   }
 }
