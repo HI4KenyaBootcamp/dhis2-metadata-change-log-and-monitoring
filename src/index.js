@@ -20,7 +20,7 @@ import ReactDOM from 'react-dom';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import Home from './Home/Home';
+import Home from './Home';
 
 import { init } from 'd2/lib/d2';
 
