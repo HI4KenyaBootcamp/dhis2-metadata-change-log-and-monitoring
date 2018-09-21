@@ -150,16 +150,26 @@ class HomeMain extends React.Component {
       const api = d2.Api.getApi();
       let klass = 'org.hisp.dhis.' + parent + '.' + child;
       // send get request for /api/metadataAudits
-      api.get('metadataAudits', {'fields': 'uid,klass,createdAt,createdBy,type', 'pageSize': '10', 'klass': klass})
-      .then(resources => {
-        console.log(resources);
-        // assign value to variable
-        let value = resources.metadataAudits.map((metadataAudit) =>
-          <TableRow key={(metadataAudit.createdAt)}>
-            <TableCell component="th" scope="row">{metadataAudit.klass}</TableCell>
-            <TableCell>{metadataAudit.createdAt}</TableCell>
-          </TableRow>
-        );
+      api.get('metadataAudits', {'fields': 'uid,klass,createdAt,createdBy,type', 'pageSize': '5', 'klass': klass})
+      .then(resources => {        
+        let value = resources.metadataAudits.map( function(metadataAudit) {
+          // get child name, transform first letter to small
+          child = child.charAt(0).toLowerCase() + child.substr(1);
+
+          // use child name to query displayName of metadata from API
+          api.get(child + 's/' + metadataAudit.uid, {'fields': 'displayName'})
+          .then( function(metadata) {
+            console.log(metadata.displayName);
+          });
+
+          // return structured table row with all data prefilled
+          return (
+            <TableRow key={(metadataAudit.createdAt)}>
+              <TableCell component="th" scope="row">{metadataAudit.uid} | {metadataAudit.klass}</TableCell>
+              <TableCell>{metadataAudit.createdAt}</TableCell>
+            </TableRow>
+          );
+        });
 
         if (tab === 'data-element') {
           // set this.state.dataElementResource
