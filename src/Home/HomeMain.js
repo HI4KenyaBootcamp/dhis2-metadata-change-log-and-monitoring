@@ -36,8 +36,6 @@ import {  AppBar,
 
 import { getInstance } from 'd2/lib/d2';
 
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-
 const styles = theme => ({
   /**
    * const: styles = func: theme()
@@ -194,11 +192,9 @@ class HomeMain extends React.Component {
               <TableCell component="th" scope="row">{metadataAudit.uid}</TableCell>
               <TableCell>{date[0]} {time[0]}</TableCell>
               <TableCell>
-                <Router>
-                  <Button size="small" variant="outlined" component={Link} to="/test" color="primary">
-                    View History
-                  </Button>
-                </Router>
+                <Button size="small" variant="outlined" color="primary">
+                  View History
+                </Button>
               </TableCell>
             </TableRow>
           );
