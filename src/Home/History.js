@@ -16,43 +16,43 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { Paper, Typography, withStyles } from '@material-ui/core';
 
-import Home from './Home';
-
-import { init } from 'd2/lib/d2';
-
-import { init } from 'd2/lib/d2';
-
-class MetadataAudit extends React.Component {
-<<<<<<< HEAD
-=======
+const styles = theme => ({
   /**
-   * func: componentWillMount()
+   * const: styles = func: theme()
    * 
-   * in-built ReactJS function, executed before rendering
+   * css for the component being rendered
    */
->>>>>>> d3e0d528d2f8c6ccc093d940f8b75318f4f92741
-  componentWillMount() {
-    // initialize d2 library baseURL
-    init({ baseUrl: process.env.REACT_APP_DOMAIN });
-  }
+  root: {
+    margin: theme.spacing.unit,
+  },
+  title: {
+    padding: theme.spacing.unit*2,
+  },
+});
 
+class History extends React.Component {
   /**
    * func: render()
-   * 
-   * root render
    */
   render() {
+    const { classes } = this.props;
+
     return (
       <React.Fragment>
-        <CssBaseline />
-        <Home />
+        <Paper className={classes.root}>
+          <div className={classes.title}>
+            <Typography variant="title">History</Typography>
+          </div>
+
+          { /* your render code will go here  */}
+
+        </Paper>
       </React.Fragment>
     );
   }
 }
 
-ReactDOM.render(<MetadataAudit />, document.getElementById('root'));
+export default withStyles(styles)(History);
