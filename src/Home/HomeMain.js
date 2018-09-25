@@ -17,7 +17,22 @@
 
 import React from 'react';
 
-import { AppBar, List, ListItem, Drawer, Tabs, Tab, Table, TableBody, TableCell, TableHead, TableRow, TableFooter, Paper, Typography, withStyles } from '@material-ui/core/';
+import {  AppBar,
+          Button,
+          Drawer,
+          List,
+          ListItem,
+          Paper,
+          Tab,
+          Tabs,
+          Table,
+          TableBody,
+          TableCell,
+          TableFooter,
+          TableHead,
+          TableRow,
+          Typography,
+          withStyles } from '@material-ui/core/';
 
 import { getInstance } from 'd2/lib/d2';
 
@@ -27,17 +42,30 @@ const styles = theme => ({
    * 
    * css for the component being rendered
    */
-  root: {
+  Button: {
     margin: theme.spacing.unit,
   },
-  tableWrapper: {
-    overflowX: 'auto',
+  content: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing.unit * 3,
+    minWidth: 0, // So the Typography noWrap works
+  },
+  drawerPaper: {
+    position: 'relative',
+    width: 240,
   },
   table: {
     minWidth: 540,
   },
+  tableWrapper: {
+    overflowX: 'auto',
+  },
   title: {
     padding: theme.spacing.unit*2,
+  },
+  root: {
+    margin: theme.spacing.unit,
   },
   singleTab: {
     flexGrow: 1,
@@ -46,16 +74,6 @@ const styles = theme => ({
     overflow: 'hidden',
     position: 'relative',
     display: 'flex',
-  },
-  drawerPaper: {
-    position: 'relative',
-    width: 240,
-  },
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-    minWidth: 0, // So the Typography noWrap works
   },
 });
 
@@ -80,6 +98,7 @@ class HomeMain extends React.Component {
    * initialization function
    * @param {*} props 
    */
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -150,23 +169,33 @@ class HomeMain extends React.Component {
       const api = d2.Api.getApi();
       let klass = 'org.hisp.dhis.' + parent + '.' + child;
       // send get request for /api/metadataAudits
-      api.get('metadataAudits', {'fields': 'uid,klass,createdAt,createdBy,type', 'pageSize': '5', 'klass': klass})
+      api.get('metadataAudits', {'fields': 'uid,klass,createdAt,createdBy,type', 'pageSize': '5', 'klass': klass, 'order': 'uid:idesc'})
       .then(resources => {        
         let value = resources.metadataAudits.map( function(metadataAudit) {
           // get child name, transform first letter to small
           child = child.charAt(0).toLowerCase() + child.substr(1);
 
           // use child name to query displayName of metadata from API
-          api.get(child + 's/' + metadataAudit.uid, {'fields': 'displayName'})
-          .then( function(metadata) {
-            console.log(metadata.displayName);
-          });
+          // api.get(child + 's/' + metadataAudit.uid, {'fields': 'displayName'})
+          // .then( function(metadata) {
+          //   console.log(metadata.displayName);
+          // });
+
+          // get data & time
+          let n = metadataAudit.createdAt;
+          let date = n.split("T")
+          let time = date[1].split(".")
 
           // return structured table row with all data prefilled
           return (
             <TableRow key={(metadataAudit.createdAt)}>
-              <TableCell component="th" scope="row">{metadataAudit.uid} | {metadataAudit.klass}</TableCell>
-              <TableCell>{metadataAudit.createdAt}</TableCell>
+              <TableCell component="th" scope="row">{metadataAudit.uid}</TableCell>
+              <TableCell>{date[0]} {time[0]}</TableCell>
+              <TableCell>
+                <Button size="small" variant="outlined" href="#" color="primary">
+                  View History
+                </Button>
+              </TableCell>
             </TableRow>
           );
         });
@@ -359,8 +388,9 @@ class HomeMain extends React.Component {
                   <Table className={classes.table}>
                     <TableHead>
                       <TableRow>
-                        <TableCell>Name</TableCell>
+                        <TableCell>Unique ID</TableCell>
                         <TableCell>Last Audit Time</TableCell>
+                        <TableCell>View History</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -421,8 +451,9 @@ class HomeMain extends React.Component {
                   <Table className={classes.table}>
                     <TableHead>
                       <TableRow>
-                        <TableCell>Name</TableCell>
+                        <TableCell>Unique ID</TableCell>
                         <TableCell>Last Audit Time</TableCell>
+                        <TableCell>View History</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -476,8 +507,9 @@ class HomeMain extends React.Component {
                   <Table className={classes.table}>
                     <TableHead>
                       <TableRow>
-                        <TableCell>Name</TableCell>
+                        <TableCell>Unique ID</TableCell>
                         <TableCell>Last Audit Time</TableCell>
+                        <TableCell>View History</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -559,8 +591,9 @@ class HomeMain extends React.Component {
                   <Table className={classes.table}>
                     <TableHead>
                       <TableRow>
-                        <TableCell>Name</TableCell>
+                        <TableCell>Unique ID</TableCell>
                         <TableCell>Last Audit Time</TableCell>
+                        <TableCell>View History</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -621,8 +654,9 @@ class HomeMain extends React.Component {
                   <Table className={classes.table}>
                     <TableHead>
                       <TableRow>
-                        <TableCell>Name</TableCell>
+                        <TableCell>Unique ID</TableCell>
                         <TableCell>Last Audit Time</TableCell>
+                        <TableCell>View History</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -704,8 +738,9 @@ class HomeMain extends React.Component {
                   <Table className={classes.table}>
                     <TableHead>
                       <TableRow>
-                        <TableCell>Name</TableCell>
+                        <TableCell>Unique ID</TableCell>
                         <TableCell>Last Audit Time</TableCell>
+                        <TableCell>View History</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -766,8 +801,9 @@ class HomeMain extends React.Component {
                   <Table className={classes.table}>
                     <TableHead>
                       <TableRow>
-                        <TableCell>Name</TableCell>
+                        <TableCell>Unique ID</TableCell>
                         <TableCell>Last Audit Time</TableCell>
+                        <TableCell>View History</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
