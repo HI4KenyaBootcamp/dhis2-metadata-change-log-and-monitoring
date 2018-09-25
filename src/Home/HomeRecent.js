@@ -47,8 +47,9 @@ class HomeRecent extends React.Component {
             <Typography variant="title">Recent</Typography>
           </div>
 
-          { /* your render code will go here  */}
-
+          <div className={classes.tableWrapper}>
+          { /* your rendered table will go here  */}
+          </div>
         </Paper>
       </React.Fragment>
     );
