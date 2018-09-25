@@ -36,6 +36,8 @@ import {  AppBar,
 
 import { getInstance } from 'd2/lib/d2';
 
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+
 const styles = theme => ({
   /**
    * const: styles = func: theme()
@@ -192,25 +194,27 @@ class HomeMain extends React.Component {
               <TableCell component="th" scope="row">{metadataAudit.uid}</TableCell>
               <TableCell>{date[0]} {time[0]}</TableCell>
               <TableCell>
-                <Button size="small" variant="outlined" href="#" color="primary">
-                  View History
-                </Button>
+                <Router>
+                  <Button size="small" variant="outlined" component={Link} to="/test" color="primary">
+                    View History
+                  </Button>
+                </Router>
               </TableCell>
             </TableRow>
           );
         });
 
-        if (tab === 'data-element') {
-          // set this.state.dataElementResource
-          this.setState({
-            dataElementTitle: title,
-            dataElementResource: value
-          });
-        } else if (tab === 'category') {
+        if (tab === 'category') {
           // set this.state.categoryResource
           this.setState({
             categoryTitle: title,
             categoryResource: value
+          });
+        } else if (tab === 'data-element') {
+          // set this.state.dataElementResource
+          this.setState({
+            dataElementTitle: title,
+            dataElementResource: value
           });
         } else if (tab === 'data-set') {
           // set this.state.dataSetResource

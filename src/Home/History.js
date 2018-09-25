@@ -17,31 +17,42 @@
 
 import React from 'react';
 
-import Grid from '@material-ui/core/Grid';
+import { Paper, Typography, withStyles } from '@material-ui/core';
 
-import HomeMain from './HomeMain';
-// import HomeRecent from './HomeRecent';
-// import HomePopular from './HomePopular';
+const styles = theme => ({
+  /**
+   * const: styles = func: theme()
+   * 
+   * css for the component being rendered
+   */
+  root: {
+    margin: theme.spacing.unit,
+  },
+  title: {
+    padding: theme.spacing.unit*2,
+  },
+});
 
-class Home extends React.Component {
-  
+class History extends React.Component {
+  /**
+   * func: render()
+   */
   render() {
+    const { classes } = this.props;
+
     return (
       <React.Fragment>
-        <Grid container spacing={0}>
-          {/* <Grid item xs={12} md={6}>
-            <HomeRecent />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <HomePopular />
-          </Grid> */}
-          <Grid item xs={12}>
-            <HomeMain />
-          </Grid>
-        </Grid>
+        <Paper className={classes.root}>
+          <div className={classes.title}>
+            <Typography variant="title">History</Typography>
+          </div>
+
+          { /* your render code will go here  */}
+
+        </Paper>
       </React.Fragment>
     );
   }
 }
 
-export default Home;
+export default withStyles(styles)(History);
