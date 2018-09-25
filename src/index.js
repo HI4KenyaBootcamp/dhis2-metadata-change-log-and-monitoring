@@ -24,17 +24,12 @@ import Home from './Home';
 
 import { init } from 'd2/lib/d2';
 
-import { init } from 'd2/lib/d2';
-
 class MetadataAudit extends React.Component {
-<<<<<<< HEAD
-=======
   /**
    * func: componentWillMount()
    * 
    * in-built ReactJS function, executed before rendering
    */
->>>>>>> d3e0d528d2f8c6ccc093d940f8b75318f4f92741
   componentWillMount() {
     // initialize d2 library baseURL
     init({ baseUrl: process.env.REACT_APP_DOMAIN });
