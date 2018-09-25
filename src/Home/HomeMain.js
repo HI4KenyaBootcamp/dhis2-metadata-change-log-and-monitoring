@@ -170,17 +170,11 @@ class HomeMain extends React.Component {
       let klass = 'org.hisp.dhis.' + parent + '.' + child;
       // send get request for /api/metadataAudits
       api.get('metadataAudits', {'fields': 'uid,klass,createdAt,createdBy,type', 'pageSize': '5', 'klass': klass, 'order': 'uid:idesc'})
-      .then(resources => {        
+      .then(resources => {
         let value = resources.metadataAudits.map( function(metadataAudit) {
           // get child name, transform first letter to small
           child = child.charAt(0).toLowerCase() + child.substr(1);
-
-          // use child name to query displayName of metadata from API
-          // api.get(child + 's/' + metadataAudit.uid, {'fields': 'displayName'})
-          // .then( function(metadata) {
-          //   console.log(metadata.displayName);
-          // });
-
+          
           // get data & time
           let n = metadataAudit.createdAt;
           let date = n.split("T")
