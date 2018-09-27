@@ -20,8 +20,7 @@ import ReactDOM from 'react-dom';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-// import Home from './Home';
-import History from './History';
+import Components from './Components';
 
 import { init } from 'd2/lib/d2';
 
@@ -45,8 +44,7 @@ class MetadataAudit extends React.Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        {/* <Home /> */}
-        <History />
+        <Components />
       </React.Fragment>
     );
   }

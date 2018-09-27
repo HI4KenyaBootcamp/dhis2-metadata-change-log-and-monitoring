@@ -17,22 +17,16 @@
 
 import React from 'react';
 
-import Grid from '@material-ui/core/Grid';
+import Main from './Main';
 
-import HomeMain from './HomeMain';
-
-class Home extends React.Component {
+class Components extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Grid container spacing={0}>
-          <Grid item xs={12}>
-            <HomeMain />
-          </Grid>
-        </Grid>
+        <Main />
       </React.Fragment>
     );
   }
 }
 
-export default Home;
+export default Components;
