@@ -16,7 +16,8 @@
  */ 
 
 import React from 'react';
-
+import { Link } from 'react-router-dom';
+import { getInstance } from 'd2/lib/d2';
 import {  AppBar,
           Button,
           Drawer,
@@ -34,10 +35,6 @@ import {  AppBar,
           TableRow,
           Typography,
           withStyles } from '@material-ui/core/';
-
-import { getInstance } from 'd2/lib/d2';
-
-import History from './History';
 
 const styles = theme => ({
   /**
@@ -132,12 +129,11 @@ class Main extends React.Component {
       validationResource: [],
       validationSelectedIndex: 26,
       
-      value: 0,
-      uid: 'HiOlN2Pq8qR',
+      value: 1, /* currently selected tab */
+      uid: '',
     };
 
     this.showResource = this.showResource.bind(this);
-    this.updateUid = this.updateUid.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleListItemClick = this.handleListItemClick.bind(this);
   }
@@ -177,7 +173,7 @@ class Main extends React.Component {
       const api = d2.Api.getApi();
       let klass = 'org.hisp.dhis.' + parent + '.' + child;
       // send get request for /api/metadataAudits
-      api.get('metadataAudits', {'fields': 'uid,klass,createdAt,createdBy,type', 'pageSize': '5', 'klass': klass, 'order': 'uid:idesc'})
+      api.get('metadataAudits', {'fields': 'uid,klass,createdAt,createdBy,type', 'pageSize': '20', 'klass': klass, 'order': 'uid:idesc'})
       .then(resources => {
         let value = resources.metadataAudits.map( function(metadataAudit) {
           // get child name, transform first letter to small
@@ -194,18 +190,19 @@ class Main extends React.Component {
               <TableCell component="th" scope="row">{metadataAudit.uid}</TableCell>
               <TableCell>{date[0]} {time[0]}</TableCell>
               <TableCell>
-                <Button 
-                  size="small" 
-                  variant="outlined" 
-                  color="primary"
-                  onClick={event => this.updateUid(event, metadataAudit.uid)}
-                >
-                  View History
-                </Button>
+              <Button 
+                component={Link} 
+                to={{ pathname:`/history/${ metadataAudit.uid }` }}
+                size="small" 
+                variant="outlined" 
+                color="primary"
+              >
+                View History
+              </Button>
               </TableCell>
             </TableRow>
           );
-        }, this);
+        });
 
         if (tab === 'category') {
           // set this.state.categoryResource
@@ -267,19 +264,6 @@ class Main extends React.Component {
    */
   handleChange = (event, value) => {
     this.setState({ value });
-  };
-
-  /**
-   * func: updateUid()
-   * 
-   * variables:
-   * @uid - this is the metadata uid
-   * 
-   * changes history when link is clicked
-   */
-  updateUid = (event, uid) => {
-    // this.setState({uid: uid}).catch((error) => { console.log(error); });
-    console.log('func1: ' + uid);
   };
 
   /**
@@ -847,8 +831,6 @@ class Main extends React.Component {
             </Paper>
           </Grid>
         </Grid>
-        
-        <History uid={this.state.uid} />
 
       </React.Fragment>
     );

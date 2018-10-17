@@ -17,37 +17,33 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import CssBaseline from '@material-ui/core/CssBaseline';
-
-import Components from './Components';
-
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { init } from 'd2/lib/d2';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Main from './Main';
+import History from './History';
 
-class MetadataAudit extends React.Component {
-  /**
-   * func: componentWillMount()
-   * 
-   * in-built ReactJS function, executed before rendering
-   */
-  componentWillMount() {
-    // initialize d2 library baseURL
+class App extends React.Component {
+  /* constructor() */
+  constructor() {
+    super();
     init({ baseUrl: process.env.REACT_APP_DOMAIN });
   }
 
-  /**
-   * func: render()
-   * 
-   * root render
-   */
+  /* render() */
   render() {
     return (
       <React.Fragment>
         <CssBaseline />
-        <Components />
+        <BrowserRouter>
+          <Switch>
+            <Route path='/' component={Main} exact/>
+            <Route path='/history/:id' component={History} />
+          </Switch>
+        </BrowserRouter>
       </React.Fragment>
     );
   }
 }
 
-ReactDOM.render(<MetadataAudit />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
