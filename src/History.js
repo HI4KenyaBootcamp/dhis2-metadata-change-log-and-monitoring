@@ -16,7 +16,7 @@
  */
 
 import React from 'react';
-
+import { getInstance } from 'd2/lib/d2';
 import {  Card,
           CardContent,
           Table,
@@ -27,8 +27,6 @@ import {  Card,
           TableRow,
           Typography, 
           withStyles } from '@material-ui/core';
-
-import { getInstance } from 'd2/lib/d2';
 
 const styles = theme => ({
   /**
@@ -76,9 +74,7 @@ class History extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      uid: this.props.uid, // element uid
-      author: '', // get the user information e.g. name & href
-      latest: [], // get the most recent version of this metadata if it exists
+      uid: this.props.match.params.id, // element uid
       history: [], // get all the metadata audit records for a single metadata
     }
   }
