@@ -16,17 +16,18 @@
  */
 
 import React from 'react';
+import { withStyles } from '@material-ui/core';
 
-import Main from './Main';
+const styles = theme => ({
+  
+});
 
-class Components extends React.Component {
+class History extends React.Component {
   render() {
     return (
-      <React.Fragment>
-        <Main />
-      </React.Fragment>
+      <h1>History</h1>
     );
   }
 }
 
-export default Components;
+export default withStyles(styles)(History);
