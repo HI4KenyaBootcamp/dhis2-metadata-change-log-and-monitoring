@@ -17,6 +17,7 @@
     "@material-ui/core": "^3.0.3",
     "@material-ui/icons": "^3.0.1",
     "d2": "^30.0.2",
+    "moment": "^2.22.2",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-router-dom": "^4.3.1",
