@@ -16,9 +16,7 @@
  */
 
 import React from 'react';
-import { getInstance } from 'd2/lib/d2';
-import {  IconButton,
-          Table,
+import {  Table,
           TableBody,
           TableCell,
           TableFooter,
@@ -27,7 +25,7 @@ import {  IconButton,
           Typography,
           withStyles
         } from '@material-ui/core';
-import HistoryIcon from '@material-ui/icons/History';
+import Rows from './Rows';
 
 const styles = theme => ({
   content: {
@@ -64,93 +62,6 @@ const Title = (props) => {
     <Typography component="h3" variant="display1" gutterBottom>{title}</Typography>
   );
 };
-
-class Rows extends React.Component {
-  /* component: Rows */
-
-  /* constructor() */
-  constructor(props) {
-    super(props);
-    this.state = {
-      rows: null, /* rows: the rows of data */
-    }
-
-    this.getMetadataAudits = this.getMetadataAudits.bind(this);
-  }
-
-  /* componentDidMount() */
-  componentDidMount() {
-    this.getMetadataAudits();
-  }
-
-  /* componentDidUpdate() */
-  componentDidUpdate(prevProps) {
-    // if any of the props has changed, fetch the new data
-    if (this.props.klass !== prevProps.klass || this.props.page !== prevProps.page || this.props.pageSize !== prevProps.pageSize) {
-      this.getMetadataAudits();
-    }
-  }
-
-  /* getMetadataAudits() */
-  getMetadataAudits() {
-    let klass = this.props.klass; // props.klass
-
-    const fetchAudits = async () => {
-      const d2 = await getInstance();
-      const api = await d2.Api.getApi();
-      const response = await api.get('metadataAudits', {'fields': 'uid,createdBy,type,createdAt', 'klass': this.props.klass, 'page': this.props.page, 'pageSize': this.props.pageSize, /*'order': 'uid:idesc'*/});
-      let audits = response.metadataAudits; // assign only the metadataAudits
-      let rows = audits.map( function(audit) {
-        let uid = audit.uid;
-        let createdAt = audit.createdAt;
-        let createdBy = audit.createdBy;
-        let type = audit.type;
-        return (
-          <TableRow key={createdAt}>
-            <TableCell><MetadataName uid={uid} klass={klass} /></TableCell>
-            <TableCell><UserName username={createdBy} /></TableCell>
-            <TableCell>{type}</TableCell>
-            <TableCell><Date date={createdAt} /></TableCell>
-            <TableCell>
-              <IconButton aria-label="Delete">
-                <HistoryIcon />
-              </IconButton>
-            </TableCell>
-          </TableRow>
-        );
-      });
-      this.setState({rows}); // set state -> row
-    };
-
-    fetchAudits(); // run the fetchAudits function
-  }
-  
-  /* render() */
-  render() {
-    return this.state.rows;
-  }
-};
-
-const MetadataName = (props) => {
-  /* component: Row */
-  return (
-    <React.Fragment>{props.klass} - {props.uid}</React.Fragment>
-  );
-}
-
-const UserName = (props) => {
-  /* component: Row */
-  return (
-    <React.Fragment>{props.username}</React.Fragment>
-  );
-}
-
-const Date = (props) => {
-  /* component: Row */
-  return (
-    <React.Fragment>{props.date}</React.Fragment>
-  );
-}
 
 class Content extends React.Component {
   /* constructor() */

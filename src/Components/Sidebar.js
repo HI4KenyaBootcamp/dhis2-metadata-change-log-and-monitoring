@@ -101,7 +101,10 @@ class Sidebar extends React.Component {
 
   /* handleSidebarLinkClick() */
   handleSidebarLinkClick(e, index, klass) {
-    this.setState({ index: index, klass: klass }); /* update the selected sidebar link */
+    this.setState({ 
+      index: index, 
+      klass: klass, 
+    }); /* update the selected sidebar link */
   }
 
   render() {
