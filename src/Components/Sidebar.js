@@ -67,7 +67,7 @@ class Sidebar extends React.Component {
   /* getSidebar() */
   getSidebar () {
     if (this.props.tab === "dataElement") { return dataElement; }
-  };
+  }
 
   /* getLinks() */
   getLinks() {

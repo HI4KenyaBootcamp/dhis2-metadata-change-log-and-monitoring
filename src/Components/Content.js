@@ -16,16 +16,19 @@
  */
 
 import React from 'react';
+import { getInstance } from 'd2/lib/d2';
 import {  Table,
           TableBody,
           TableCell,
           TableFooter,
           TableHead,
+          TablePagination,
           TableRow,
           Typography,
           withStyles
         } from '@material-ui/core';
 import Rows from './Rows';
+import TablePaginationActions from './TablePaginationActions';
 
 const styles = theme => ({
   content: {
@@ -68,9 +71,54 @@ class Content extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 1, /* pagination: the page number */
-      pageSize: 10, /* pagination: the number of rows per page */
+      page: 0, /* pagination: the page number */
+      pageCount: 0,
+      pageSize: 0, /* pagination: the number of rows per page */
+      total: 0,
     }
+
+    this.getPagerTotal = this.getPagerTotal.bind(this);
+    this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
+  }
+
+  /* componentDidMount() */
+  componentDidMount() {
+    this.getPagerTotal();
+  }
+
+  /* componentDidUpdate() */
+  componentDidUpdate(prevProps) {
+    // if any of the props has changed, fetch the new data
+    if (this.props.pageSize !== prevProps.pageSize || this.props.page !== prevProps.page) {
+      this.getPagerTotal();
+    }
+  }
+
+  /* getPagerTotal */
+  getPagerTotal() {
+    const fetchAudits = async () => {
+      const d2 = await getInstance();
+      const api = await d2.Api.getApi();
+      const response = await api.get('metadataAudits', {'fields': 'null', 'klass': this.props.klass, 'page': 1, 'pageSize': 10});
+      this.setState({
+        page: response.pager.page, // set state page number
+        pageCount: response.pager.pageCount,
+        pageSize: response.pager.pageSize, // set state pageSize
+        total: response.pager.total, // set state total
+      });
+    }
+
+    fetchAudits();
+  }
+
+  /* handleChangePage() */
+  handleChangePage = (event, page) => {
+    this.setState({ page });
+  };
+
+  /* handleChangeRowsPerPage() */
+  handleChangeRowsPerPage = event => {
+    this.setState({ pageSize: event.target.value });
   }
 
   /* render() */
@@ -101,7 +149,18 @@ class Content extends React.Component {
               </TableBody>
               <TableFooter>
                 <TableRow>
-                  <TableCell colSpan={5}>The following data depends on the Metadata Audit feauture</TableCell>
+                  <TablePagination
+                    /**
+                     * REMEMBER TO UPDATE THIS WHEN PAGINATION IS FIXED
+                     */
+                    colSpan={5}
+                    count={this.state.total}
+                    rowsPerPage={this.state.pageSize}
+                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                    page={this.state.page - 1}
+                    onChangePage={this.handleChangePage}
+                    ActionsComponent={TablePaginationActions}
+                  />
                 </TableRow>
               </TableFooter>
             </Table>
