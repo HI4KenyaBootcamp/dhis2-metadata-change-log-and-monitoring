@@ -83,7 +83,7 @@ class Rows extends React.Component {
           </TableRow>
         );
       });
-      this.setState({rows}); // set state -> row
+      this.setState({rows}); // set state -> rows
     };
 
     fetchAudits(); // run the fetchAudits function

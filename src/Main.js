@@ -51,7 +51,7 @@ class Main extends React.Component {
   /* handlechange() - this is the method that changes the tabs onClick */
   handleChange = (event, value) => {
     this.setState({ value });
-  };
+  }
 
   /* render() */
   render() {
