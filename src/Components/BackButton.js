@@ -16,25 +16,48 @@
  */
 
 import React from 'react';
-import { withStyles } from '@material-ui/core';
+import {  Button,
+          withStyles 
+        } from '@material-ui/core';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const styles = theme => ({
-  
+  button: {
+    margin: theme.spacing.unit,
+  },
+});
+
+const theme = createMuiTheme ({
+  palette: {
+    primary: { main: '#276696' },
+    secondary: { main: '#ff9800' },
+  }
 });
 
 class BackButton extends React.Component {
+  /* const contextTyes */
   static contextTypes = {
-    router: () => true, // replace with PropTypes.object if you use them
+    router: () => true,
   }
 
   /* render() */
   render() {
+    const { classes } = this.props;
+
     return (
-      <button
-        className="button icon-left"
-        onClick={this.context.router.history.goBack}>
-          Back
-      </button>
+      <React.Fragment>
+        <MuiThemeProvider theme={theme}>
+          <Button
+            color="primary"
+            variant="contained"
+            size="large"
+            className={classes.button}
+            onClick={this.context.router.history.goBack}
+          >
+            Back
+          </Button>
+        </MuiThemeProvider>
+      </React.Fragment>
     )
   }
 }

@@ -16,16 +16,41 @@
  */
 
 import React from 'react';
+// import { getInstance } from 'd2/lib/d2';
 import { withStyles } from '@material-ui/core';
+import BackButton from './Components/BackButton';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const styles = theme => ({
   
 });
 
+const custom = createMuiTheme ({
+  palette: {
+    primary: { main: '#276696' },
+    secondary: { main: '#ff9800' },
+  }
+});
+
 class History extends React.Component {
+  /* constructor() */
+  constructor(props) {
+    super(props);
+    this.state = {
+      uid: this.props.match.params.id, // get uid passed through react-router
+    }
+  }
+
+  /* render() */
   render() {
     return (
-      <h1>History</h1>
+      <React.Fragment>
+        <BackButton />
+
+        <MuiThemeProvider theme={custom}>
+          <h1>History for {this.state.uid}</h1>
+        </MuiThemeProvider>
+      </React.Fragment>
     );
   }
 }
