@@ -16,43 +16,50 @@
  */
 
 import React from 'react';
-// import { getInstance } from 'd2/lib/d2';
-import { withStyles } from '@material-ui/core';
-import BackButton from './Components/BackButton';
+import {  Button,
+          withStyles 
+        } from '@material-ui/core';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const styles = theme => ({
-  
+  button: {
+    margin: theme.spacing.unit,
+  },
 });
 
-const custom = createMuiTheme ({
+const theme = createMuiTheme ({
   palette: {
     primary: { main: '#276696' },
     secondary: { main: '#ff9800' },
   }
 });
 
-class History extends React.Component {
-  /* constructor() */
-  constructor(props) {
-    super(props);
-    this.state = {
-      uid: this.props.match.params.id, // get uid passed through react-router
-    }
+class BackButton extends React.Component {
+  /* const contextTyes */
+  static contextTypes = {
+    router: () => true,
   }
 
   /* render() */
   render() {
+    const { classes } = this.props;
+
     return (
       <React.Fragment>
-        <BackButton />
-
-        <MuiThemeProvider theme={custom}>
-          <h1>History for {this.state.uid}</h1>
+        <MuiThemeProvider theme={theme}>
+          <Button
+            color="primary"
+            variant="contained"
+            size="large"
+            className={classes.button}
+            onClick={this.context.router.history.goBack}
+          >
+            Back
+          </Button>
         </MuiThemeProvider>
       </React.Fragment>
-    );
+    )
   }
 }
 
-export default withStyles(styles)(History);
+export default withStyles(styles)(BackButton);

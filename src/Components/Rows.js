@@ -23,6 +23,7 @@ import {  IconButton,
           TableRow 
         } from '@material-ui/core';
 import HistoryIcon from '@material-ui/icons/History';
+import { Link } from 'react-router-dom';
 import MetadataName from './MetadataName';
 import UserName from './UserName';
 import Date from './Date';
@@ -76,7 +77,14 @@ class Rows extends React.Component {
             <TableCell>{type}</TableCell>
             <TableCell><Date date={createdAt} /></TableCell>
             <TableCell>
-              <IconButton aria-label="Delete">
+              <IconButton 
+                component={Link} 
+                to={{ pathname:`/history/${uid}` }}
+                size="small" 
+                variant="outlined" 
+                color="primary"
+                aria-label="History"
+              >
                 <HistoryIcon />
               </IconButton>
             </TableCell>
