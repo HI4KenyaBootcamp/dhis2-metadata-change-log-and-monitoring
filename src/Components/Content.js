@@ -72,12 +72,12 @@ class Content extends React.Component {
     super(props);
     this.state = {
       page: 0, /* pagination: the page number */
-      pageCount: 0,
       pageSize: 0, /* pagination: the number of rows per page */
-      total: 0,
+      total: 0, /* total: number of total rows */
     }
 
     this.getPagerTotal = this.getPagerTotal.bind(this);
+    this.handleChangePage = this.handleChangePage.bind(this);
     this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
   }
 
@@ -89,7 +89,7 @@ class Content extends React.Component {
   /* componentDidUpdate() */
   componentDidUpdate(prevProps) {
     // if any of the props has changed, fetch the new data
-    if (this.props.pageSize !== prevProps.pageSize || this.props.page !== prevProps.page) {
+    if (this.props.klass !== prevProps.klass || this.props.pageSize !== prevProps.pageSize || this.props.page !== prevProps.page) {
       this.getPagerTotal();
     }
   }
@@ -101,8 +101,7 @@ class Content extends React.Component {
       const api = await d2.Api.getApi();
       const response = await api.get('metadataAudits', {'fields': 'null', 'klass': this.props.klass, 'page': 1, 'pageSize': 10});
       this.setState({
-        page: response.pager.page, // set state page number
-        pageCount: response.pager.pageCount,
+        page: response.pager.page - 1, // set state page number
         pageSize: response.pager.pageSize, // set state pageSize
         total: response.pager.total, // set state total
       });
@@ -144,20 +143,20 @@ class Content extends React.Component {
               </TableHead>
               <TableBody>
                 {/* START OF ROW DATA */}
-                <Rows page={this.state.page} pageSize={this.state.pageSize} klass={this.props.klass} />
+                <Rows page={this.state.page + 1} pageSize={this.state.pageSize} klass={this.props.klass} />
                 {/* END OF ROW DATA */}
               </TableBody>
               <TableFooter>
                 <TableRow>
                   <TablePagination
                     /**
-                     * REMEMBER TO UPDATE THIS WHEN PAGINATION IS FIXED
+                     * PAGINATION WILL WORK WHEN API FIXES THE BUG
                      */
                     colSpan={5}
                     count={this.state.total}
                     rowsPerPage={this.state.pageSize}
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                    page={this.state.page - 1}
+                    page={this.state.page}
                     onChangePage={this.handleChangePage}
                     ActionsComponent={TablePaginationActions}
                   />
