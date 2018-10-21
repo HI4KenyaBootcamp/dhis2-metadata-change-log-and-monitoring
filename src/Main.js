@@ -24,12 +24,20 @@ import {  AppBar,
           Typography, 
           withStyles 
         } from '@material-ui/core/';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Sidebar from './Components/Sidebar';
 
 const styles = theme => ({
   paper: {
     margin: theme.spacing.unit,
   },
+});
+
+const theme = createMuiTheme ({
+  palette: {
+    primary: { main: '#276696' },
+    secondary: { main: '#ff9800' },
+  }
 });
 
 const TabContainer = (props) => (
@@ -60,53 +68,55 @@ class Main extends React.Component {
 
     return (
       <React.Fragment>
-        <Grid container spacing={0}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <AppBar position="static">
-                <Tabs 
-                  value={value}
-                  onChange={this.handleChange}
-                  scrollable
-                  scrollButtons="auto"
-                >
-                  <Tab label="Category" disabled />
-                  <Tab label="Data Element" />
-                  <Tab label="Data Set" disabled />
-                  <Tab label="Indicator" disabled />
-                  <Tab label="Organisation Unit" disabled />
-                  <Tab label="Program" disabled />
-                  <Tab label="Validation" disabled />
-                  <Tab label="Other" />
-                </Tabs>
-              </AppBar>
-              {value === 0 && <TabContainer>
-                <Sidebar tab="category"/>
-              </TabContainer>}
-              {value === 1 && <TabContainer>
-                <Sidebar default="org.hisp.dhis.dataelement.DataElement" tab="dataElement"/>
-              </TabContainer>}
-              {value === 2 && <TabContainer>
-                <Sidebar tab="dataSet"/>
-              </TabContainer>}
-              {value === 3 && <TabContainer>
-                <Sidebar tab="indicator"/>
-              </TabContainer>}
-              {value === 4 && <TabContainer>
-                <Sidebar tab="organisationUnit"/>
-              </TabContainer>}
-              {value === 5 && <TabContainer>
-                <Sidebar tab="program"/>
-              </TabContainer>}
-              {value === 6 && <TabContainer>
-                <Sidebar tab="validation"/>
-              </TabContainer>}
-              {value === 7 && <TabContainer>
-                <Sidebar tab="other"/>
-              </TabContainer>}
-            </Paper>
+        <MuiThemeProvider theme={theme}>
+          <Grid container spacing={0}>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <AppBar position="static">
+                  <Tabs 
+                    value={value}
+                    onChange={this.handleChange}
+                    scrollable
+                    scrollButtons="auto"
+                  >
+                    <Tab label="Category" disabled />
+                    <Tab label="Data Element" />
+                    <Tab label="Data Set" disabled />
+                    <Tab label="Indicator" disabled />
+                    <Tab label="Organisation Unit" disabled />
+                    <Tab label="Program" disabled />
+                    <Tab label="Validation" disabled />
+                    <Tab label="Other" />
+                  </Tabs>
+                </AppBar>
+                {value === 0 && <TabContainer>
+                  <Sidebar tab="category"/>
+                </TabContainer>}
+                {value === 1 && <TabContainer>
+                  <Sidebar default="org.hisp.dhis.dataelement.DataElement" tab="dataElement"/>
+                </TabContainer>}
+                {value === 2 && <TabContainer>
+                  <Sidebar tab="dataSet"/>
+                </TabContainer>}
+                {value === 3 && <TabContainer>
+                  <Sidebar tab="indicator"/>
+                </TabContainer>}
+                {value === 4 && <TabContainer>
+                  <Sidebar tab="organisationUnit"/>
+                </TabContainer>}
+                {value === 5 && <TabContainer>
+                  <Sidebar tab="program"/>
+                </TabContainer>}
+                {value === 6 && <TabContainer>
+                  <Sidebar tab="validation"/>
+                </TabContainer>}
+                {value === 7 && <TabContainer>
+                  <Sidebar tab="other"/>
+                </TabContainer>}
+              </Paper>
+            </Grid>
           </Grid>
-        </Grid>
+        </MuiThemeProvider>
       </React.Fragment>
     );
   }
