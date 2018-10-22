@@ -27,7 +27,7 @@ class App extends React.Component {
   /* constructor() */
   constructor() {
     super();
-    init({ baseUrl: process.env.REACT_APP_DOMAIN });
+    init({ baseUrl: process.env.REACT_APP_API });
   }
 
   /* render() */
@@ -37,8 +37,10 @@ class App extends React.Component {
         <CssBaseline />
         <BrowserRouter>
           <Switch>
-            <Route path='/' component={Main} exact/>
-            <Route path='/history/:id' component={History} />
+            <Route path={"/"} component={Main} exact/>
+            <Route path={"/index.html"} component={Main}/>
+            <Route path={"/history/:id"} component={History}/>
+            <Route component={Main}/>
           </Switch>
         </BrowserRouter>
       </React.Fragment>
