@@ -1,7 +1,7 @@
 # DHIS2 Metadata Change Log and Monitoring app
 
 ### Introduction
-Metadata Audit is an installable DHIS2 application that allows users to track the history of metadata objects on the system. The information made available via this application is made possible through accessing the `metadataAudit` Psql table, via the DHIS2 Web API.
+Metadata Change Log and Monitoring app is an installable DHIS2 application that allows users to track the history of metadata objects on the system. The information made available via this application is made possible through accessing the `metadataAudit` Psql table, via the DHIS2 Web API.
 
 ### Prerequisite Action
 The following application requires, at the least, DHIS2 version 2.30. This is because development was done & tested on this version.
