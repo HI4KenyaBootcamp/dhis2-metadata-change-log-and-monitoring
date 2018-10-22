@@ -29,6 +29,7 @@ import {  Table,
         } from '@material-ui/core';
 import Rows from './Rows';
 import TablePaginationActions from './TablePaginationActions';
+import Search from './Search';
 
 const styles = theme => ({
   content: {
@@ -129,6 +130,7 @@ class Content extends React.Component {
         <main className={classes.content}>
           <div className={classes.title}>
             <Title klass={this.props.klass} />
+            <Search />
           </div>
           <div className={classes.tableWrapper}>
             <Table className={classes.table}>
