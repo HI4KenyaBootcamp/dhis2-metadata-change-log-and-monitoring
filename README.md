@@ -30,7 +30,7 @@ npm install
 ### Configuration
 Before you start development, you'll need to update the **.env** file which is in the root directory.
 
-Update the `REACT_APP_DOMAIN` variable with the URL of your DHIS2 version 2.30 instance.
+Update the `REACT_APP_API` variable with the API URL of your DHIS2 version 2.30 instance.
 
 ### Running the Application
 Once you have setup the requirements, installed the application, it's dependencies and configured it, fire up the application by running the following command in your terminal.
