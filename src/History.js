@@ -27,7 +27,7 @@ const styles = theme => ({
     marginBotton: theme.spacing.unit,
     marginLeft: 'auto',
     marginRight: 'auto',
-    width: '50%',
+    width: '80%',
   },
 });
 
