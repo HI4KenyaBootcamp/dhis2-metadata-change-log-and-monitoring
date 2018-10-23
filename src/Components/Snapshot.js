@@ -81,6 +81,7 @@ const WithMutations = (props) => {
     let operation = mutation.operation;
     /* get the value */
     let value;
+    
     if (typeof mutation.value === 'string') {
       value = mutation.value;
     } else {
@@ -127,7 +128,7 @@ const WithoutMutations = (props) => {
   let value = JSON.parse(audit.value);
   
   let rows;
-  for (var key in value) { // for each object in sidebar, generate link
+  for (var key in value) {
     if (!value.hasOwnProperty(key)) continue; // skip loop if the property is from prototype
     
     /* get the field */
@@ -140,7 +141,7 @@ const WithoutMutations = (props) => {
       content = JSON.stringify(value[key]);
     }
 
-    rows = ( // generate link and append to previous links
+    rows = ( // generate row
       <React.Fragment>
         {rows}
         <TableRow>
