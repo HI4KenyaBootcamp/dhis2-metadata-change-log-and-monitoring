@@ -27,8 +27,8 @@ import {  Table,
           Typography,
           withStyles
         } from '@material-ui/core';
-import Rows from './Rows';
 import TablePaginationActions from './TablePaginationActions';
+import Rows from './Rows';
 import Search from './Search';
 
 const styles = theme => ({
