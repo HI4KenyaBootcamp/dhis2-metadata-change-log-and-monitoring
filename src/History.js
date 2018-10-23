@@ -16,20 +16,19 @@
  */
 
 import React from 'react';
-// import { getInstance } from 'd2/lib/d2';
+import { getInstance } from 'd2/lib/d2';
 import { withStyles } from '@material-ui/core';
 import BackButton from './Components/BackButton';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Snapshot from './Components/Snapshot';
 
 const styles = theme => ({
-  
-});
-
-const custom = createMuiTheme ({
-  palette: {
-    primary: { main: '#276696' },
-    secondary: { main: '#ff9800' },
-  }
+  container: {
+    marginTop: theme.spacing.unit,
+    marginBotton: theme.spacing.unit,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '50%',
+  },
 });
 
 class History extends React.Component {
@@ -38,18 +37,47 @@ class History extends React.Component {
     super(props);
     this.state = {
       uid: this.props.match.params.id, // get uid passed through react-router
+      timeline: null,
     }
+
+    this.getHistory = this.getHistory.bind(this);
+  }
+
+  /* componentDidMount() */
+  componentDidMount() {
+    this.getHistory();
+  }
+
+  /* getHistory() */
+  getHistory() {
+    let uid = this.state.uid;
+
+    const fetchHistory = async () => {
+      const d2 = await getInstance();
+      const api = await d2.Api.getApi();
+      const response = await api.get('metadataAudits', {'fields': ':all', 'uid': uid, 'order': 'createdAt:idesc'});
+      let audits = response.metadataAudits;
+      let timeline = audits.map( function(audit) {
+        return(
+          <Snapshot key={audit.createdAt} audit={audit} />
+        );
+      });
+      this.setState({timeline}); // set state -> timeline
+    };
+
+    fetchHistory();
   }
 
   /* render() */
   render() {
+    const { classes } = this.props;
+
     return (
       <React.Fragment>
-        <BackButton />
-
-        <MuiThemeProvider theme={custom}>
-          <h1>History for {this.state.uid}</h1>
-        </MuiThemeProvider>
+        <section className={classes.container}>
+          <BackButton />
+          {this.state.timeline}
+        </section>
       </React.Fragment>
     );
   }

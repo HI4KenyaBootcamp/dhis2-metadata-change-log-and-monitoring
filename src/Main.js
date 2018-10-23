@@ -54,6 +54,8 @@ class Main extends React.Component {
     this.state = {
       value: 1, /* this is the value of the tab that's preselected on default */
     };
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   /* handlechange() - this is the method that changes the tabs onClick */

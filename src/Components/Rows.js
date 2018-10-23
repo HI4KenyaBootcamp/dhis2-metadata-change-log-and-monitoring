@@ -63,7 +63,7 @@ class Rows extends React.Component {
     const fetchAudits = async () => {
       const d2 = await getInstance();
       const api = await d2.Api.getApi();
-      const response = await api.get('metadataAudits', {'fields': 'uid,createdBy,type,createdAt', 'klass': this.props.klass, 'page': this.props.page, 'pageSize': this.props.pageSize, /*'order': 'uid:idesc'*/});
+      const response = await api.get('metadataAudits', {'fields': 'uid,createdBy,type,createdAt', 'klass': this.props.klass, 'page': this.props.page, 'pageSize': this.props.pageSize, 'order': 'createdAt:idesc'});
       let audits = response.metadataAudits; // assign only the metadataAudits
       let rows = audits.map( function(audit) {
         let uid = audit.uid;
