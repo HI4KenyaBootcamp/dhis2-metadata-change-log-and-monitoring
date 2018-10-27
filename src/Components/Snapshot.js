@@ -1,5 +1,7 @@
 /**
- *  Metadata Audit  Copyright (C) 2018  University of Nairobi Health IT
+ *  Metadata Change Log & Monitoring
+ *  
+ *  Copyright (C) 2018  University of Nairobi Health IT
  *  
  *  Written by Kevin Marekia Kiringu (kmarekia@students.uonbi.ac.ke)
  *

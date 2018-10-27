@@ -1,5 +1,7 @@
 /**
- *  Metadata Audit  Copyright (C) 2018  University of Nairobi Health IT
+ *  Metadata Change Log & Monitoring
+ *  
+ *  Copyright (C) 2018  University of Nairobi Health IT
  *  
  *  Written by Kevin Marekia Kiringu (kmarekia@students.uonbi.ac.ke)
  *
@@ -15,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */ 
+ */
 
 import React from 'react';
 import {  AppBar,
