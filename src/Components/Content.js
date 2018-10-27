@@ -1,5 +1,7 @@
 /**
- * Metadata Audit  Copyright (C) 2018  University of Nairobi Health IT
+ *  Metadata Audit  Copyright (C) 2018  University of Nairobi Health IT
+ *  
+ *  Written by Kevin Marekia Kiringu (kmarekia@students.uonbi.ac.ke)
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
