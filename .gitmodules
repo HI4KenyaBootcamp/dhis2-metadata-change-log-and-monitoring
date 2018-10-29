@@ -1,0 +1,3 @@
+[submodule "documentation"]
+	path = documentation
+	url = https://github.com/HI4KenyaBootcamp/dhis2-metadata-change-log-and-monitoring.wiki.git
